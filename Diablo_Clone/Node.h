@@ -41,4 +41,9 @@ void RemoveNode( Node * node );
 Node* GetNode(Node* node, int UID);
 
 void CreateNode(int ID);
+
+void UpdateNode(void);
+
+void HandleInput(Node * node);
+
 #endif /* Node_h */

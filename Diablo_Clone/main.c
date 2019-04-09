@@ -14,18 +14,29 @@
 #include "Node.h"
 #include "Render.h"
 
+//TEMP SHIT BEFORE MOVING IT TO ANOTHER FILE
+//MAP
+//header
+/*
+ map Map (2D array or wut?
+ cycle through map
+ do other shit
+*/
+// \END MAP
+//END TEMP
+
 Node * NodeHead;
 
 int main(int argc, const char * argv[]) {
     InitRender();
     InitHeadNode();
     
-    Node * shit = NULL;
-    
     CreateNode(0);//this shit needs to be fixed too
     
     while (!WindowShouldClose()) {
         RenderDraw();
+        
+        UpdateNode();
         RenderUpdate();
     }
 //GIANT DEBUG FOR POINTERS

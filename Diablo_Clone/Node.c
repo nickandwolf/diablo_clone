@@ -72,3 +72,36 @@ void CreateNode(int ID) {
         AddNode(temp);
     }
 }
+
+void UpdateNode() {
+    Node* current = NodeHead;
+    
+    while (current != NULL) {
+        switch(current->ID) {
+            case PLAYER:
+                HandleInput(current);
+                break;
+        }
+        
+        current = current->next;
+    }
+}
+
+void HandleInput(Node * node) { //TODO: add freakin' collision detection
+    
+    if (IsKeyDown(KEY_RIGHT)) {
+        node->position.x += 1.0f;
+    }
+    
+    else if (IsKeyDown(KEY_LEFT)) {
+        node->position.x -= 1.0f;
+    }
+    
+    if (IsKeyDown(KEY_UP)) {
+        node->position.y -= 1.0f;
+    }
+    
+    else if (IsKeyDown(KEY_DOWN)) {
+        node->position.y += 1.0f;
+    }
+}
