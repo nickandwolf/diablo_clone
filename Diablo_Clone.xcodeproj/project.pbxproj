@@ -12,6 +12,7 @@
 		44BF346C225A104100179A39 /* libraylib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 44BF346B225A104100179A39 /* libraylib.a */; };
 		44BF346F225A115500179A39 /* Node.c in Sources */ = {isa = PBXBuildFile; fileRef = 44BF346E225A115500179A39 /* Node.c */; };
 		44BF3472225A151000179A39 /* Render.c in Sources */ = {isa = PBXBuildFile; fileRef = 44BF3471225A151000179A39 /* Render.c */; };
+		44E3B2F0225F3BAA00CB8904 /* Map.c in Sources */ = {isa = PBXBuildFile; fileRef = 44E3B2EF225F3BAA00CB8904 /* Map.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -40,6 +41,9 @@
 		44BF346E225A115500179A39 /* Node.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Node.c; sourceTree = "<group>"; };
 		44BF3470225A151000179A39 /* Render.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Render.h; sourceTree = "<group>"; };
 		44BF3471225A151000179A39 /* Render.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Render.c; sourceTree = "<group>"; };
+		44E3B2EE225F3BAA00CB8904 /* Map.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Map.h; sourceTree = "<group>"; };
+		44E3B2EF225F3BAA00CB8904 /* Map.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Map.c; sourceTree = "<group>"; };
+		44E3B2F1225F55BB00CB8904 /* terrain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = terrain.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +62,7 @@
 		44058E09225B503600982495 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				44E3B2F1225F55BB00CB8904 /* terrain.png */,
 				44058E0C225B505700982495 /* sheet1.png */,
 				44058E0D225B505700982495 /* sheet2.png */,
 				44058E0A225B505700982495 /* sheet3.png */,
@@ -88,6 +93,8 @@
 			children = (
 				44058E09225B503600982495 /* Assets */,
 				44BF345F225A0E6700179A39 /* main.c */,
+				44E3B2EE225F3BAA00CB8904 /* Map.h */,
+				44E3B2EF225F3BAA00CB8904 /* Map.c */,
 				44BF346D225A115500179A39 /* Node.h */,
 				44BF346E225A115500179A39 /* Node.c */,
 				44BF3470225A151000179A39 /* Render.h */,
@@ -162,6 +169,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44E3B2F0225F3BAA00CB8904 /* Map.c in Sources */,
 				44BF3460225A0E6700179A39 /* main.c in Sources */,
 				44BF346F225A115500179A39 /* Node.c in Sources */,
 				44BF3472225A151000179A39 /* Render.c in Sources */,

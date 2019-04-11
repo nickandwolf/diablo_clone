@@ -11,6 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include "raylib.h"
+#include "Map.h"
 #include "Node.h"
 #include "Render.h"
 
@@ -26,12 +27,21 @@
 //END TEMP
 
 Node * NodeHead;
+int* MasterMap;
 
 int main(int argc, const char * argv[]) {
     InitRender();
     InitHeadNode();
+    MakeSquare();
     
-    CreateNode(0);//this shit needs to be fixed too
+    /*for (int i = 0; i < 360; i++) {
+        if (i % 20 == 0)
+            printf("\n");
+        printf("%i", *(MasterMap+i));
+        
+    }*/
+    
+    CreateNode(PLAYER);//this shit needs to be fixed too
     
     while (!WindowShouldClose()) {
         RenderDraw();
@@ -39,29 +49,6 @@ int main(int argc, const char * argv[]) {
         UpdateNode();
         RenderUpdate();
     }
-//GIANT DEBUG FOR POINTERS
-//    Node * shit = NULL;
-//    shit = malloc(sizeof(Node));
-//    shit->ID = 100;
-//    shit->UID = 200;
-//
-//    AddNode(shit);
-//
-//    Node * shitt = NULL;
-//    shitt = malloc(sizeof(Node));
-//    shitt->ID = 10;
-//    shitt->UID = 20;
-//
-//    AddNode(shitt);
-//
-//    Node * shittt = NULL;
-//    shittt = malloc(sizeof(Node));
-//    shittt->ID = 1;
-//    shittt->UID = 2;
-//
-//    AddNode(shittt);
-//
-//    print_list();
     
     return 0;
 }
