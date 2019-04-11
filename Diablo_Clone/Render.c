@@ -16,6 +16,7 @@ void InitRender() {
     mainSheet2 = LoadTexture("Assets/sheet2.png");
     mainSheet3 = LoadTexture("Assets/sheet3.png");
     mainSheet4 = LoadTexture("Assets/sheet4.png");
+    terrainSheet = LoadTexture("Assets/terrain.png");
 }
 
 void RenderDraw() {
@@ -23,6 +24,36 @@ void RenderDraw() {
     
     BeginDrawing();
     ClearBackground(RAYWHITE);
+    Rectangle sprite;
+    for (int x = 0; x < 20; x++) {
+        for (int y = 0; y < 20; y++) {
+            int spriteNum = GetTile(x, y);
+            switch (spriteNum) {
+                case 0:
+                    sprite.x = 48;
+                    sprite.y = 600;
+                    sprite.height = 48;
+                    sprite.width = 48;
+                    break;
+                    
+                case 1:
+                    sprite.x = 48;
+                    sprite.y = 672;
+                    sprite.height = 48;
+                    sprite.width = 48;
+                    break;
+                    
+                case 2:
+                    sprite.x = 480;
+                    sprite.y = 624;
+                    sprite.height = 48;
+                    sprite.width = 59;
+                    break;
+            }
+            
+            DrawTextureRec(terrainSheet, sprite, (Vector2){x * TILESIZE, y * TILESIZE}, WHITE);
+        }
+    }
     
     while (current != NULL) {
         DrawTextureRec(masterSheet, current->frameRect, current->position, WHITE);
@@ -31,6 +62,8 @@ void RenderDraw() {
     
     EndDrawing();
 }
+
+
 
 void RenderUpdate(void) {
     //make masterSheet change here.

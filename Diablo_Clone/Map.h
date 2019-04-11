@@ -12,8 +12,17 @@
 #include <stdlib.h>
 #include <string.h>
 
+//TODO: HEY FIGURE OUT X AND Y SHIT, YO!
+
+enum MAP_ID {
+    FLOOR,
+    WALL,
+    DOOR
+};
+//make a struct that holds map data shit? That way render doesn't have to do shit...?
 extern int* MasterMap;
 
+int GetTile(int x, int y);
 void InitMap(int total);
 void ClearMap(void);
 

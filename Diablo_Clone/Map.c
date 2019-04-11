@@ -16,11 +16,16 @@ void ClearMap() {
     free(MasterMap);
 }
 
+//MAKE THIS SHIT VARIABLE STUFF, YO
+int GetTile(int x, int y) {
+    return MasterMap[y * 20 + x];
+}
+
 void MakeSquare() {
     InitMap(400);//gotta fix this, just for debugginggnigng now
     
     //ALSO! AAAALLLSOOOO!!! This method doesn't save any memory
-    int temp[] = {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+    int temp[] = {1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,
                   1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
                   1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
                   1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
