@@ -65,7 +65,6 @@ void RenderDraw() {
         while (current != NULL) {
             if (y == current->position.y) {
                 DrawTextureRec(masterSheet, current->frameRect, current->position, WHITE);
-                DrawRectangle(current->collisionRect.x, current->collisionRect.y, current->collisionRect.width, current->collisionRect.height, WHITE);
             }
             current = current->next;
         }

@@ -49,6 +49,6 @@ void UpdateNode(void);
 
 void HandleInput(Node * node);
 
-bool CheckNodeCollision(Vector2 pos);
+bool CheckNodeCollision(Rectangle pos, int UID);
 
 #endif /* Node_h */

@@ -72,7 +72,7 @@ void CreateNode(int ID) {
             temp->ID = ID;
             temp->position = (Vector2){60,60};
             temp->UID = master_UID;
-            temp->collisionRect = (Rectangle){temp->position.x + 15, temp->position.y+26, 18, 14};
+            temp->collisionRect = (Rectangle){temp->position.x + 15, temp->position.y+31, 18, 9};
             break;
             
         case 1:
@@ -80,7 +80,7 @@ void CreateNode(int ID) {
             temp->ID = ID;
             temp->position = (Vector2){160,160};
             temp->UID = master_UID;
-            temp->collisionRect = (Rectangle){temp->position.x + 15, temp->position.y+26, 18, 14};
+            temp->collisionRect = (Rectangle){temp->position.x + 15, temp->position.y+31, 18, 9};
             break;
     }
     
@@ -109,48 +109,51 @@ void UpdateNode() {
 }
 
 void HandleInput(Node * node) { //TODO: add freakin' collision detection
+    
     //THIS SHIT IS FUCKING STUPID
-    //Won't let me move away form the collision!
-    if (IsKeyDown(KEY_RIGHT) && CheckNodeCollision((Vector2){node->position.x + 1.0f, node->position.y})) {
-        node->collisionRect = (Rectangle){node->position.x + 15, node->position.y+26, 18, 14};
-        node->position.x += 1.0f;
+    //Won't let me move away from the collision!
+    if (IsKeyDown(KEY_RIGHT)) {
+        if (CheckNodeCollision((Rectangle) {node->collisionRect.x + 1, node->collisionRect.y, node->collisionRect.width, node->collisionRect.height}, node->UID)) {
+            node->position.x += 1.0f;
+            node->collisionRect = (Rectangle){node->position.x + 15, node->position.y+31, 18, 9};
+        }
     }
     
-    else if (IsKeyDown(KEY_LEFT) && CheckNodeCollision((Vector2){node->position.x - 1.0f, node->position.y})) {
-        node->collisionRect = (Rectangle){node->position.x + 15, node->position.y+26, 18, 14};
-        node->position.x -= 1.0f;
+    else if (IsKeyDown(KEY_LEFT)) {
+        if (CheckNodeCollision((Rectangle) {node->collisionRect.x - 1, node->collisionRect.y, node->collisionRect.width, node->collisionRect.height}, node->UID)) {
+            node->position.x -= 1.0f;
+            node->collisionRect = (Rectangle){node->position.x + 15, node->position.y+31, 18, 9};
+        }
     }
     
-    if (IsKeyDown(KEY_UP) && CheckNodeCollision((Vector2){node->position.x, node->position.y - 1.0f})) {
-        node->collisionRect = (Rectangle){node->position.x + 15, node->position.y+26, 18, 14};
-        node->position.y -= 1.0f;
+    if (IsKeyDown(KEY_UP)) {
+        if (CheckNodeCollision((Rectangle) {node->collisionRect.x, node->collisionRect.y - 1, node->collisionRect.width, node->collisionRect.height}, node->UID)) {
+            node->position.y -= 1.0f;
+            node->collisionRect = (Rectangle){node->position.x + 15, node->position.y+31, 18, 9};
+        }
     }
     
-    else if (IsKeyDown(KEY_DOWN) && CheckNodeCollision((Vector2){node->position.x, node->position.y + 1.0f})) {
-        node->collisionRect = (Rectangle){node->position.x + 15, node->position.y+26, 18, 14};
-        node->position.y += 1.0f;
+    else if (IsKeyDown(KEY_DOWN)) {
+        if (CheckNodeCollision((Rectangle) {node->collisionRect.x, node->collisionRect.y + 1, node->collisionRect.width, node->collisionRect.height}, node->UID)) {
+            node->position.y += 1.0f;
+            node->collisionRect = (Rectangle){node->position.x + 15, node->position.y+31, 18, 9};
+        }
     }
 }
 
-bool CheckNodeCollision(Vector2 pos) {
+bool CheckNodeCollision(Rectangle pos, int UID) {
     Node* temp1 = NodeHead;
-    Node* temp2 = NodeHead;
     
     while (temp1 != NULL) {
-        while (temp2 != NULL) {
-            if (temp1->UID != temp2->UID) {
-                if (temp1->collisionRect.x < temp2->collisionRect.x + temp2->collisionRect.width &&
-                    temp1->collisionRect.x + temp1->collisionRect.width > temp2->collisionRect.x &&
-                    temp1->collisionRect.y < temp2->collisionRect.y + temp2->collisionRect.height &&
-                    temp1->collisionRect.y + temp1->collisionRect.height > temp2->collisionRect.y)
-                    return false;
-            }
-            
-            temp2 = temp2->next;
+        if (UID != temp1->UID) {
+            if (pos.x < temp1->collisionRect.x + temp1->collisionRect.width &&
+                pos.x + pos.width > temp1->collisionRect.x &&
+                pos.y < temp1->collisionRect.y + temp1->collisionRect.height &&
+                pos.y + pos.height > temp1->collisionRect.y)
+                return false;
         }
-        temp2 = NodeHead;
+        
         temp1 = temp1->next;
     }
-    
     return true;
 }

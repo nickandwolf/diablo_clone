@@ -24,6 +24,8 @@ enum MAP_ID {
     DOOR
 };
 
+//hmmm struct tiem?!
+
 //make a struct that holds map data shit? That way render doesn't have to do shit...?
 extern int* MasterMap;
 
