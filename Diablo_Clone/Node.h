@@ -25,10 +25,13 @@ typedef struct Node {
     //Texture2D spriteSheet; // All sprites use the same 4 character sheets
     Rectangle frameRect;     // Also there's a lot of white space between sprites
     struct Node* next;       // so we'll have to clean that up in time
+    Rectangle collisionRect;
 } Node;
 
 extern Node* NodeHead;
 static int master_UID = 0;
+
+//MAKE ACTIONS IN HERE TOO, LIKE MOVE COLLISION SHIT AND MOVE PLAYER SHIT
 
 void print_list(void);
 
@@ -45,5 +48,7 @@ void CreateNode(int ID);
 void UpdateNode(void);
 
 void HandleInput(Node * node);
+
+bool CheckNodeCollision(Vector2 pos);
 
 #endif /* Node_h */

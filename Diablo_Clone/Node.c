@@ -21,6 +21,14 @@ void InitHeadNode(void) {
     NodeHead = NULL;
     NodeHead = malloc(sizeof(Node));
     NodeHead->next = NULL; //what data should head contain?
+    NodeHead->frameRect.x = 0;
+    NodeHead->frameRect.y = 0;
+    NodeHead->frameRect.width = 0;
+    NodeHead->frameRect.height = 0;
+    NodeHead->ID = -1;
+    NodeHead->UID = -1;
+    NodeHead->position.x = -1;
+    NodeHead->position.y = -1;
 }
 
 void AddNode(Node* node) {
@@ -64,6 +72,15 @@ void CreateNode(int ID) {
             temp->ID = ID;
             temp->position = (Vector2){60,60};
             temp->UID = master_UID;
+            temp->collisionRect = (Rectangle){temp->position.x + 15, temp->position.y+26, 18, 14};
+            break;
+            
+        case 1:
+            temp->frameRect = (Rectangle){0,0,48,48};
+            temp->ID = ID;
+            temp->position = (Vector2){160,160};
+            temp->UID = master_UID;
+            temp->collisionRect = (Rectangle){temp->position.x + 15, temp->position.y+26, 18, 14};
             break;
     }
     
@@ -81,6 +98,10 @@ void UpdateNode() {
             case PLAYER:
                 HandleInput(current);
                 break;
+                
+            case 1:
+                
+                break;
         }
         
         current = current->next;
@@ -88,20 +109,48 @@ void UpdateNode() {
 }
 
 void HandleInput(Node * node) { //TODO: add freakin' collision detection
-    
-    if (IsKeyDown(KEY_RIGHT)) {
+    //THIS SHIT IS FUCKING STUPID
+    //Won't let me move away form the collision!
+    if (IsKeyDown(KEY_RIGHT) && CheckNodeCollision((Vector2){node->position.x + 1.0f, node->position.y})) {
+        node->collisionRect = (Rectangle){node->position.x + 15, node->position.y+26, 18, 14};
         node->position.x += 1.0f;
     }
     
-    else if (IsKeyDown(KEY_LEFT)) {
+    else if (IsKeyDown(KEY_LEFT) && CheckNodeCollision((Vector2){node->position.x - 1.0f, node->position.y})) {
+        node->collisionRect = (Rectangle){node->position.x + 15, node->position.y+26, 18, 14};
         node->position.x -= 1.0f;
     }
     
-    if (IsKeyDown(KEY_UP)) {
+    if (IsKeyDown(KEY_UP) && CheckNodeCollision((Vector2){node->position.x, node->position.y - 1.0f})) {
+        node->collisionRect = (Rectangle){node->position.x + 15, node->position.y+26, 18, 14};
         node->position.y -= 1.0f;
     }
     
-    else if (IsKeyDown(KEY_DOWN)) {
+    else if (IsKeyDown(KEY_DOWN) && CheckNodeCollision((Vector2){node->position.x, node->position.y + 1.0f})) {
+        node->collisionRect = (Rectangle){node->position.x + 15, node->position.y+26, 18, 14};
         node->position.y += 1.0f;
     }
+}
+
+bool CheckNodeCollision(Vector2 pos) {
+    Node* temp1 = NodeHead;
+    Node* temp2 = NodeHead;
+    
+    while (temp1 != NULL) {
+        while (temp2 != NULL) {
+            if (temp1->UID != temp2->UID) {
+                if (temp1->collisionRect.x < temp2->collisionRect.x + temp2->collisionRect.width &&
+                    temp1->collisionRect.x + temp1->collisionRect.width > temp2->collisionRect.x &&
+                    temp1->collisionRect.y < temp2->collisionRect.y + temp2->collisionRect.height &&
+                    temp1->collisionRect.y + temp1->collisionRect.height > temp2->collisionRect.y)
+                    return false;
+            }
+            
+            temp2 = temp2->next;
+        }
+        temp2 = NodeHead;
+        temp1 = temp1->next;
+    }
+    
+    return true;
 }

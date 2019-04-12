@@ -14,13 +14,20 @@
 
 //TODO: HEY FIGURE OUT X AND Y SHIT, YO!
 
+//make this a real thing
+static const int MAPHEIGHT = 100;
+
 enum MAP_ID {
     FLOOR,
     WALL,
+    TOP_WALL,
     DOOR
 };
+
 //make a struct that holds map data shit? That way render doesn't have to do shit...?
 extern int* MasterMap;
+
+//make a floor and ceiling map for...like...depth of something
 
 int GetTile(int x, int y);
 void InitMap(int total);

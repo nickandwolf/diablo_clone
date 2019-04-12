@@ -35,14 +35,9 @@ int main(int argc, const char * argv[]) {
     MakeSquare();
     
     //MAKE A VARIABLE FOR FULL SIZE OF MAP! GONNA HAVE TO RE-MAKE ALL THIS GARBAGE
-    for (int i = 0; i < 360; i++) {
-        if (i % 20 == 0)
-            printf("\n");
-        printf("%i", *(MasterMap+i));
-        
-    }
     
     CreateNode(PLAYER);//this shit needs to be fixed too
+    CreateNode(1);
     
     while (!WindowShouldClose()) {
         RenderDraw();

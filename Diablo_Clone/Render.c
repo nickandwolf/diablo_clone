@@ -20,8 +20,6 @@ void InitRender() {
 }
 
 void RenderDraw() {
-    Node* current = NodeHead;
-    
     BeginDrawing();
     ClearBackground(RAYWHITE);
     Rectangle sprite;
@@ -31,33 +29,46 @@ void RenderDraw() {
             switch (spriteNum) {
                 case 0:
                     sprite.x = 48;
-                    sprite.y = 600;
+                    sprite.y = 48;
+                    sprite.height = 48;
+                    sprite.width = 48;
+                    break;
+                
+                case 1:
+                    sprite.x = 48;
+                    sprite.y = 624;
                     sprite.height = 48;
                     sprite.width = 48;
                     break;
                     
-                case 1:
+                case 2:
                     sprite.x = 48;
                     sprite.y = 672;
                     sprite.height = 48;
                     sprite.width = 48;
                     break;
                     
-                case 2:
-                    sprite.x = 480;
-                    sprite.y = 624;
+                default:
+                    sprite.x = 0;
+                    sprite.y = 0;
                     sprite.height = 48;
-                    sprite.width = 59;
+                    sprite.width = 48;;
                     break;
             }
-            
             DrawTextureRec(terrainSheet, sprite, (Vector2){x * TILESIZE, y * TILESIZE}, WHITE);
         }
     }
     
-    while (current != NULL) {
-        DrawTextureRec(masterSheet, current->frameRect, current->position, WHITE);
-        current = current->next;
+    //MARK: CPU Intensive stupid solution
+    for (int y = 0; y < MAPHEIGHT*TILESIZE; y++) {
+        Node* current = NodeHead->next;
+        while (current != NULL) {
+            if (y == current->position.y) {
+                DrawTextureRec(masterSheet, current->frameRect, current->position, WHITE);
+                DrawRectangle(current->collisionRect.x, current->collisionRect.y, current->collisionRect.width, current->collisionRect.height, WHITE);
+            }
+            current = current->next;
+        }
     }
     
     EndDrawing();

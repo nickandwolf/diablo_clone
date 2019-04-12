@@ -24,6 +24,7 @@ static int frameCounter = 0;
 
 extern Node * NodeHead;
 extern int* MasterMap;
+extern const int MAPHEIGHT;
 
 static Texture2D mainSheet1;   // We are going with a unique approach.
 static Texture2D mainSheet2;   // Instead of moving the square to change frames
