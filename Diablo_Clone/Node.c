@@ -43,7 +43,7 @@ void AddNode(Node* node) {
     current->next->next = NULL;
 }
 
-void RemoveNode( Node * node ) {
+void RemoveNode( Node * node ) { //TODO: Never actually tested this, pretty sure it's borked
     Node * temp = node->next;
     
     //GOTTA MOVE EVERYTHING!

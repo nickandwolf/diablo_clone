@@ -11,6 +11,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include "raylib.h"
 
 //TODO: HEY FIGURE OUT X AND Y SHIT, YO!
 
@@ -26,14 +27,26 @@ enum MAP_ID {
 
 //hmmm struct tiem?!
 
-//make a struct that holds map data shit? That way render doesn't have to do shit...?
-extern int* MasterMap;
+typedef struct MapTile {
+    int ID; //type of thingy
+    Vector2 position;
+    //Texture2D spriteSheet;
+    Rectangle frameRect;
+    Rectangle collisionRect;
+    struct MapTile* next;
+} MapTile;
+
+extern MapTile* MapHead;
 
 //make a floor and ceiling map for...like...depth of something
 
-int GetTile(int x, int y);
-void InitMap(int total);
+void InitMapHead(void);
 void ClearMap(void);
+void AddMapTile(MapTile* tile);
+void RemoveMapTile(MapTile * node); //MARK: If I can remove it, don't I need to mark that?
+MapTile* GetMapTile(MapTile* tile, Vector2 pos);
+void CreateMapTile(int ID, int x, int y);
+void UpdateMapTile(void);
 
 //make some preset rooms and then an algorithm to set them
 void MakeSquare(void);

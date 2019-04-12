@@ -22,41 +22,10 @@ void InitRender() {
 void RenderDraw() {
     BeginDrawing();
     ClearBackground(RAYWHITE);
-    Rectangle sprite;
-    for (int x = 0; x < 20; x++) {
-        for (int y = 0; y < 20; y++) {
-            int spriteNum = GetTile(x, y);
-            switch (spriteNum) {
-                case 0:
-                    sprite.x = 48;
-                    sprite.y = 48;
-                    sprite.height = 48;
-                    sprite.width = 48;
-                    break;
-                
-                case 1:
-                    sprite.x = 48;
-                    sprite.y = 624;
-                    sprite.height = 48;
-                    sprite.width = 48;
-                    break;
-                    
-                case 2:
-                    sprite.x = 48;
-                    sprite.y = 672;
-                    sprite.height = 48;
-                    sprite.width = 48;
-                    break;
-                    
-                default:
-                    sprite.x = 0;
-                    sprite.y = 0;
-                    sprite.height = 48;
-                    sprite.width = 48;;
-                    break;
-            }
-            DrawTextureRec(terrainSheet, sprite, (Vector2){x * TILESIZE, y * TILESIZE}, WHITE);
-        }
+    MapTile* current = MapHead->next;
+    while (current != NULL) {
+        DrawTextureRec(terrainSheet, current->frameRect, (Vector2) {current->position.x * TILESIZE, current->position.y * TILESIZE}, WHITE);
+        current = current->next;
     }
     
     //MARK: CPU Intensive stupid solution

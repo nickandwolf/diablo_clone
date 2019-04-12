@@ -27,12 +27,14 @@
 //END TEMP
 
 Node * NodeHead;
-int* MasterMap;
+MapTile* MapHead;
 
 int main(int argc, const char * argv[]) {
     InitRender();
+    InitMapHead();
     InitHeadNode();
-    MakeSquare();
+    
+    CreateMapTile(0,2,2);
     
     //MAKE A VARIABLE FOR FULL SIZE OF MAP! GONNA HAVE TO RE-MAKE ALL THIS GARBAGE
     
