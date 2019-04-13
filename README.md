@@ -6,12 +6,20 @@ The world of Arueth used to be one of magic, heroes, and gods but it is the dawn
 This game is a diablo clone. It may have elements of random generation or it may be tailor made. We have no clue.
 
 Current Focus:
+
 Getting the map to work. Probably going to use Tiled and either make our own parser or steal one (legally of course).
+
 Get the camera working.
+
 Work on player input methods. Keyboard Movement // Classic Diablo clicking movement // RTS/MOBA Movement
+
 Have the player able to attack and do other abilities.
+
 Netcode?!?! Who freakin' knows!
 
+
 Implemented:
+
 Uhhh... basic keyboard movement and collision
+
 Dummy animations (automatic every 8 frames, like NES Dragon Quest).
