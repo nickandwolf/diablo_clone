@@ -17,7 +17,8 @@ static const int SCREEN_WIDTH = 1280; //could remove static and use extern if ne
 static const int SCREEN_HEIGHT = 720; //
 static const int TARGET_FPS = 60;
 static const int FRAME_SPEED = 8;
-static const int TILESIZE = 48;
+
+extern const int TILESIZE;
 
 static int currentFrame = 0;
 static int frameCounter = 0;

@@ -114,29 +114,37 @@ void HandleInput(Node * node) { //TODO: add freakin' collision detection
     //Won't let me move away from the collision!
     if (IsKeyDown(KEY_RIGHT)) {
         if (CheckNodeCollision((Rectangle) {node->collisionRect.x + 1, node->collisionRect.y, node->collisionRect.width, node->collisionRect.height}, node->UID)) {
-            node->position.x += 1.0f;
-            node->collisionRect = (Rectangle){node->position.x + 15, node->position.y+31, 18, 9};
+            if (CheckMapCollision((Rectangle) {node->collisionRect.x + 1, node->collisionRect.y, node->collisionRect.width, node->collisionRect.height})) {
+                node->position.x += 1.0f;
+                node->collisionRect = (Rectangle){node->position.x + 15, node->position.y+31, 18, 9};
+            }
         }
     }
     
     else if (IsKeyDown(KEY_LEFT)) {
         if (CheckNodeCollision((Rectangle) {node->collisionRect.x - 1, node->collisionRect.y, node->collisionRect.width, node->collisionRect.height}, node->UID)) {
-            node->position.x -= 1.0f;
-            node->collisionRect = (Rectangle){node->position.x + 15, node->position.y+31, 18, 9};
+            if (CheckMapCollision((Rectangle) {node->collisionRect.x - 1, node->collisionRect.y, node->collisionRect.width, node->collisionRect.height})) {
+                node->position.x -= 1.0f;
+                node->collisionRect = (Rectangle){node->position.x + 15, node->position.y+31, 18, 9};
+            }
         }
     }
     
     if (IsKeyDown(KEY_UP)) {
         if (CheckNodeCollision((Rectangle) {node->collisionRect.x, node->collisionRect.y - 1, node->collisionRect.width, node->collisionRect.height}, node->UID)) {
-            node->position.y -= 1.0f;
-            node->collisionRect = (Rectangle){node->position.x + 15, node->position.y+31, 18, 9};
+            if (CheckMapCollision((Rectangle) {node->collisionRect.x, node->collisionRect.y - 1, node->collisionRect.width, node->collisionRect.height})) {
+                node->position.y -= 1.0f;
+                node->collisionRect = (Rectangle){node->position.x + 15, node->position.y+31, 18, 9};
+            }
         }
     }
     
     else if (IsKeyDown(KEY_DOWN)) {
         if (CheckNodeCollision((Rectangle) {node->collisionRect.x, node->collisionRect.y + 1, node->collisionRect.width, node->collisionRect.height}, node->UID)) {
-            node->position.y += 1.0f;
-            node->collisionRect = (Rectangle){node->position.x + 15, node->position.y+31, 18, 9};
+            if (CheckMapCollision((Rectangle) {node->collisionRect.x, node->collisionRect.y + 1, node->collisionRect.width, node->collisionRect.height})) {
+                node->position.y += 1.0f;
+                node->collisionRect = (Rectangle){node->position.x + 15, node->position.y+31, 18, 9};
+            }
         }
     }
 }

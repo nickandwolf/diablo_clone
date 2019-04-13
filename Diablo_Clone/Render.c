@@ -22,10 +22,13 @@ void InitRender() {
 void RenderDraw() {
     BeginDrawing();
     ClearBackground(RAYWHITE);
-    MapTile* current = MapHead->next;
-    while (current != NULL) {
-        DrawTextureRec(terrainSheet, current->frameRect, (Vector2) {current->position.x * TILESIZE, current->position.y * TILESIZE}, WHITE);
-        current = current->next;
+    //create a Y build order?!?
+    MapTile* tile = MapHead->next;
+    while (tile != NULL) {
+        
+        DrawTextureRec(terrainSheet, tile->frameRect, (Vector2) {tile->position.x, tile->position.y}, WHITE);
+        DrawRectangleLines(tile->collisionRect.x, tile->collisionRect.y, tile->collisionRect.width, tile->collisionRect.height, RED);
+        tile = tile->next;
     }
     
     //MARK: CPU Intensive stupid solution
@@ -34,6 +37,7 @@ void RenderDraw() {
         while (current != NULL) {
             if (y == current->position.y) {
                 DrawTextureRec(masterSheet, current->frameRect, current->position, WHITE);
+                DrawRectangleLines(current->collisionRect.x, current->collisionRect.y, current->collisionRect.width, current->collisionRect.height, RED);
             }
             current = current->next;
         }

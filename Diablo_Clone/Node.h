@@ -13,6 +13,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "raylib.h"
+#include "Map.h"
 
 enum NODE_ID {
     PLAYER //placeholder for classes
@@ -29,6 +30,7 @@ typedef struct Node {
 } Node;
 
 extern Node* NodeHead;
+extern MapTile* MapHead;
 static int master_UID = 0;
 
 //MAKE ACTIONS IN HERE TOO, LIKE MOVE COLLISION SHIT AND MOVE PLAYER SHIT

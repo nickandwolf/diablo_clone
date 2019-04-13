@@ -29,12 +29,14 @@
 Node * NodeHead;
 MapTile* MapHead;
 
+const int TILESIZE = 48; //So collisions work, I guess
+
 int main(int argc, const char * argv[]) {
     InitRender();
     InitMapHead();
     InitHeadNode();
     
-    CreateMapTile(0,2,2);
+    MakeMap(TEST_LEVEL);
     
     //MAKE A VARIABLE FOR FULL SIZE OF MAP! GONNA HAVE TO RE-MAKE ALL THIS GARBAGE
     
