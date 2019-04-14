@@ -23,35 +23,26 @@ void RenderDraw() {
     BeginDrawing();
     ClearBackground(RAYWHITE);
     
-    //create a Y build order?!?
-    //WE GONNA TRY NOW!
-    size_t nodehead_len = sizeof(NodeHead)/sizeof(Node);
-    qsort(NodeHead, nodehead_len, sizeof(Node), QNodeYSort); //so QSort isn't working...
-    //nope, fuck this shit, we gonna go with sprite layers instead.
-    
-    Node* current = NodeHead->next;
-    while (current != NULL) {
-        if (current->UID == 0 && current->ID == FLOOR) {
-            DrawTextureRec(terrainSheet, current->frameRect, current->position, WHITE);
+    for (int layer = 0; layer <= 3; layer++) {
+        Node* current = NodeHead->next;
+        while (current != NULL) {
+            if (current->layer == layer) {
+                if (current->UID == 0) {
+                    DrawTextureRec(terrainSheet, current->frameRect, current->position, WHITE); //gonna have to fix this :\ no worries yet
+                }
+                else {
+                    DrawTextureRec(masterSheet, current->frameRect, current->position, WHITE);
+                }
+            }
+            DrawRectangleLines(current->collisionRect.x, current->collisionRect.y, current->collisionRect.width, current->collisionRect.height, RED);
+            
+            current = current->next;
         }
-        current = current->next;
     }
     
-    current = NodeHead->next;
-    while (current != NULL) {
-        if (current->UID == 0) {
-            if (current->ID != FLOOR)
-                DrawTextureRec(terrainSheet, current->frameRect, current->position, WHITE);
-        }
-        else {
-            DrawTextureRec(masterSheet, current->frameRect, current->position, WHITE);
-        }
-        DrawRectangleLines(current->collisionRect.x, current->collisionRect.y, current->collisionRect.width, current->collisionRect.height, RED);
-        
-        current = current->next;
-    }
-    
-    
+    //STUPID DEBUG SHIT
+    int dude = GetFPS();
+    printf("FPS: %i", dude);
     EndDrawing();
 }
 

@@ -29,6 +29,7 @@ void InitHeadNode(void) {
     NodeHead->UID = -1;
     NodeHead->position.x = -1;
     NodeHead->position.y = -1;
+    NodeHead->layer = -1;
 }
 
 void AddNode(Node* node) {
@@ -40,7 +41,7 @@ void AddNode(Node* node) {
 
     current->next = malloc(sizeof(Node));
     current->next = node;
-    current->next->next = NULL;
+    //current->next->next = NULL;
 }
 
 void RemoveNode( Node * node ) { //TODO: Never actually tested this, pretty sure it's borked
@@ -89,6 +90,7 @@ void CreateNode(int ID) {
             temp->position = (Vector2){60,60};
             temp->UID = master_UID;
             temp->collisionRect = (Rectangle){temp->position.x + 15, temp->position.y+31, 18, 9};
+            temp->layer = 2;
             break;
             
         case 1:
@@ -97,6 +99,7 @@ void CreateNode(int ID) {
             temp->position = (Vector2){160,160};
             temp->UID = master_UID;
             temp->collisionRect = (Rectangle){temp->position.x + 15, temp->position.y+31, 18, 9};
+            temp->layer = 2;
             break;
     }
     
@@ -117,6 +120,7 @@ void CreateMapNode(int ID, int x, int y) {
             temp->ID = ID;
             temp->position = (Vector2){x,y};
             temp->collisionRect = (Rectangle){-1,-1,-1,-1};
+            temp->layer = 0;
             break;
             
         case WALL:
@@ -124,6 +128,7 @@ void CreateMapNode(int ID, int x, int y) {
             temp->ID = ID;
             temp->position = (Vector2){x, y};
             temp->collisionRect = (Rectangle){temp->position.x, temp->position.y, 48, 48};
+            temp->layer = 3;
             break;
             
         case TAPESTRY_WALL:
@@ -131,6 +136,7 @@ void CreateMapNode(int ID, int x, int y) {
             temp->ID = ID;
             temp->position = (Vector2){x, y};
             temp->collisionRect = (Rectangle){temp->position.x, temp->position.y, 48, 48};
+            temp->layer = 3;
             break;
             
         case TOP_WALL:
@@ -138,6 +144,7 @@ void CreateMapNode(int ID, int x, int y) {
             temp->ID = ID;
             temp->position = (Vector2){x, y};
             temp->collisionRect = (Rectangle){temp->position.x, temp->position.y+24, 48, 24};
+            temp->layer = 3;
             break;
             
         case BOTTOM_WALL:
@@ -145,6 +152,7 @@ void CreateMapNode(int ID, int x, int y) {
             temp->ID = ID;
             temp->position = (Vector2){x, y};
             temp->collisionRect = (Rectangle){temp->position.x, temp->position.y, 48, 48};
+            temp->layer = 3;
             break;
             
         default:
@@ -152,29 +160,35 @@ void CreateMapNode(int ID, int x, int y) {
             temp->ID = ID;
             temp->position = (Vector2){-1, -1};
             temp->collisionRect = (Rectangle){0, 0, 0, 0};
+            temp->layer = -1;
             break;
     }
     
-    if (temp != NULL) {
-        temp->UID = 0;
-        AddNode(temp);
-    }
+    temp->UID = 0;
+    AddNode(temp);
 }
 
 void UpdateNode() {
+    MergeSort(&NodeHead);
+    
     Node* current = NodeHead;
     
     while (current != NULL) {
-        switch(current->ID) {
-            case PLAYER:
-                HandleInput(current);
-                break;
-                
-            case 1:
-                
-                break;
+        if (current->UID == 0) {
+            
         }
         
+        else {
+            switch(current->ID) {
+                case PLAYER:
+                    HandleInput(current);
+                    break;
+                    
+                case 1:
+                    
+                    break;
+            }
+        }
         current = current->next;
     }
 }
@@ -274,6 +288,70 @@ void MakeMap(int mapID) {
             }
         }
     }
+    
     free(data); //do we gotta do this?, if we wanna save 1.2MB of memory, yes...
+}
 
+void MergeSort(Node** headRef) {
+    Node* head = *headRef;
+    Node* a;
+    Node* b;
+    
+    /* Base case -- length 0 or 1 */
+    if ((head == NULL) || (head->next == NULL)) {
+        return;
+    }
+    
+    /* Split head into 'a' and 'b' sublists */
+    FrontBackSplit(head, &a, &b);
+    
+    /* Recursively sort the sublists */
+    MergeSort(&a);
+    MergeSort(&b);
+    
+    /* answer = merge the two sorted lists together */
+    *headRef = SortedMerge(a, b);
+}
+
+Node* SortedMerge(Node* a, Node* b) {
+    Node* result = NULL;
+    
+    /* Base cases */
+    if (a == NULL)
+        return (b);
+    else if (b == NULL)
+        return (a);
+    
+    /* Pick either a or b, and recur */
+    if (a->position.y <= b->position.y) {
+        result = a;
+        result->next = SortedMerge(a->next, b);
+    }
+    else {
+        result = b;
+        result->next = SortedMerge(a, b->next);
+    }
+    return (result);
+}
+
+void FrontBackSplit(Node* source, Node** frontRef, Node** backRef) {
+    Node* fast;
+    Node* slow;
+    slow = source;
+    fast = source->next;
+    
+    /* Advance 'fast' two nodes, and advance 'slow' one node */
+    while (fast != NULL) {
+        fast = fast->next;
+        if (fast != NULL) {
+            slow = slow->next;
+            fast = fast->next;
+        }
+    }
+    
+    /* 'slow' is before the midpoint in the list, so split it in two
+     at that point. */
+    *frontRef = source;
+    *backRef = slow->next;
+    slow->next = NULL;
 }

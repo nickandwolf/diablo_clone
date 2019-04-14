@@ -35,18 +35,22 @@ int main(int argc, const char * argv[]) {
     InitRender();
     InitHeadNode();
     
-    //MakeMap(TEST_LEVEL);
+    MakeMap(TEST_LEVEL);
     
     //MAKE A VARIABLE FOR FULL SIZE OF MAP! GONNA HAVE TO RE-MAKE ALL THIS GARBAGE
     
     CreateNode(PLAYER);//this shit needs to be fixed too
     CreateNode(1);
     
+    MergeSort(&NodeHead); //make a thingy saying if we should change this or not...
+    
     while (!WindowShouldClose()) {
         RenderDraw();
         
         UpdateNode();
         RenderUpdate();
+        
+        
     }
     
     return 0;

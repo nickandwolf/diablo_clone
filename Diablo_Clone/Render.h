@@ -11,7 +11,6 @@
 
 #include "raylib.h"
 #include "Node.h"
-#include "Utilities.h"
 
 static const int SCREEN_WIDTH = 1280; //could remove static and use extern if needed
 static const int SCREEN_HEIGHT = 720; //

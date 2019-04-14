@@ -39,6 +39,7 @@ typedef struct Node {
     Rectangle frameRect;     // Also there's a lot of white space between sprites
     struct Node* next;       // so we'll have to clean that up in time
     Rectangle collisionRect;
+    int layer;               //0 = floor; 1 = stuff on floor; 2 = higher than that, like players; 3 = highest so FAR
 } Node;
 
 //MAP SHIT
@@ -80,5 +81,11 @@ bool CheckNodeCollision(Rectangle pos, int UID);
 bool CheckNodeSpriteCollision(Rectangle pos, int UID); //TODO: implement
 
 void MakeMap(int mapID);
+
+void MergeSort(Node** headRef);
+
+Node* SortedMerge(Node* a, Node* b);
+
+void FrontBackSplit(Node* source, Node** frontRef, Node** backRef);
 
 #endif /* Node_h */
