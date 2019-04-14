@@ -14,6 +14,8 @@
 #include "Node.h"
 #include "Render.h"
 
+
+
 //TEMP SHIT BEFORE MOVING IT TO ANOTHER FILE
 //MAP
 //header
@@ -33,7 +35,7 @@ int main(int argc, const char * argv[]) {
     InitRender();
     InitHeadNode();
     
-    MakeMap(TEST_LEVEL);
+    //MakeMap(TEST_LEVEL);
     
     //MAKE A VARIABLE FOR FULL SIZE OF MAP! GONNA HAVE TO RE-MAKE ALL THIS GARBAGE
     
@@ -49,3 +51,4 @@ int main(int argc, const char * argv[]) {
     
     return 0;
 }
+
