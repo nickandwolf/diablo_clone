@@ -46,19 +46,35 @@ void AddNode(Node* node) {
 void RemoveNode( Node * node ) { //TODO: Never actually tested this, pretty sure it's borked
     Node * temp = node->next;
     
-    //GOTTA MOVE EVERYTHING!
-    node->UID = node->next->UID;
-    
     node->next = temp->next;
     free(temp);
 }
 
-Node* GetNode(Node* node, int UID) {
+void ClearMap() {
+    Node* temp = NodeHead->next;
+    while (temp != NULL) {
+        if (temp->UID == 0) {
+            RemoveNode(temp); //GOTTA TEST THIS!
+        }
+    }
+}
+
+Node* GetNode(int UID) {
+    Node * node = NodeHead->next;
     while (node != NULL && node->UID != UID) {
         node = node->next;
     }
     
     return node;
+}
+
+Node* GetNodeXY(int x, int y) { //TODO: Probably broken
+    Node * temp = NodeHead->next;
+    while (temp != NULL && temp->position.x != x && temp->position.y != y) {
+        temp = temp->next;
+    }
+    
+    return temp;
 }
 
 void CreateNode(int ID) {
@@ -90,6 +106,61 @@ void CreateNode(int ID) {
     }
 }
 
+void CreateMapNode(int ID, int x, int y) {
+    Node * temp = NULL;
+    temp = malloc(sizeof(Node));
+    temp->next = NULL;//probably not needed
+    
+    switch(ID) {
+        case FLOOR:
+            temp->frameRect = (Rectangle){48,48,48,48};
+            temp->ID = ID;
+            temp->position = (Vector2){x,y};
+            temp->collisionRect = (Rectangle){-1,-1,-1,-1};
+            break;
+            
+        case WALL:
+            temp->frameRect = (Rectangle){48,624,48,48};
+            temp->ID = ID;
+            temp->position = (Vector2){x, y};
+            temp->collisionRect = (Rectangle){temp->position.x, temp->position.y, 48, 48};
+            break;
+            
+        case TAPESTRY_WALL:
+            temp->frameRect = (Rectangle){192,672,48,48};
+            temp->ID = ID;
+            temp->position = (Vector2){x, y};
+            temp->collisionRect = (Rectangle){temp->position.x, temp->position.y, 48, 48};
+            break;
+            
+        case TOP_WALL:
+            temp->frameRect = (Rectangle){48,672,48,48};
+            temp->ID = ID;
+            temp->position = (Vector2){x, y};
+            temp->collisionRect = (Rectangle){temp->position.x, temp->position.y+24, 48, 24};
+            break;
+            
+        case BOTTOM_WALL:
+            temp->frameRect = (Rectangle){48,672,48,48};
+            temp->ID = ID;
+            temp->position = (Vector2){x, y};
+            temp->collisionRect = (Rectangle){temp->position.x, temp->position.y, 48, 48};
+            break;
+            
+        default:
+            temp->frameRect = (Rectangle){0,0,48,48};
+            temp->ID = ID;
+            temp->position = (Vector2){-1, -1};
+            temp->collisionRect = (Rectangle){0, 0, 0, 0};
+            break;
+    }
+    
+    if (temp != NULL) {
+        temp->UID = 0;
+        AddNode(temp);
+    }
+}
+
 void UpdateNode() {
     Node* current = NodeHead;
     
@@ -109,42 +180,31 @@ void UpdateNode() {
 }
 
 void HandleInput(Node * node) { //TODO: add freakin' collision detection
-    
-    //THIS SHIT IS FUCKING STUPID
-    //Won't let me move away from the collision!
     if (IsKeyDown(KEY_RIGHT)) {
         if (CheckNodeCollision((Rectangle) {node->collisionRect.x + 1, node->collisionRect.y, node->collisionRect.width, node->collisionRect.height}, node->UID)) {
-            if (CheckMapCollision((Rectangle) {node->collisionRect.x + 1, node->collisionRect.y, node->collisionRect.width, node->collisionRect.height})) {
-                node->position.x += 1.0f;
-                node->collisionRect = (Rectangle){node->position.x + 15, node->position.y+31, 18, 9};
-            }
+            node->position.x += 1.0f;
+            node->collisionRect = (Rectangle){node->position.x + 15, node->position.y+31, 18, 9};
         }
     }
     
     else if (IsKeyDown(KEY_LEFT)) {
         if (CheckNodeCollision((Rectangle) {node->collisionRect.x - 1, node->collisionRect.y, node->collisionRect.width, node->collisionRect.height}, node->UID)) {
-            if (CheckMapCollision((Rectangle) {node->collisionRect.x - 1, node->collisionRect.y, node->collisionRect.width, node->collisionRect.height})) {
-                node->position.x -= 1.0f;
-                node->collisionRect = (Rectangle){node->position.x + 15, node->position.y+31, 18, 9};
-            }
+            node->position.x -= 1.0f;
+            node->collisionRect = (Rectangle){node->position.x + 15, node->position.y+31, 18, 9};
         }
     }
     
     if (IsKeyDown(KEY_UP)) {
         if (CheckNodeCollision((Rectangle) {node->collisionRect.x, node->collisionRect.y - 1, node->collisionRect.width, node->collisionRect.height}, node->UID)) {
-            if (CheckMapCollision((Rectangle) {node->collisionRect.x, node->collisionRect.y - 1, node->collisionRect.width, node->collisionRect.height})) {
-                node->position.y -= 1.0f;
-                node->collisionRect = (Rectangle){node->position.x + 15, node->position.y+31, 18, 9};
-            }
+            node->position.y -= 1.0f;
+            node->collisionRect = (Rectangle){node->position.x + 15, node->position.y+31, 18, 9};
         }
     }
     
     else if (IsKeyDown(KEY_DOWN)) {
         if (CheckNodeCollision((Rectangle) {node->collisionRect.x, node->collisionRect.y + 1, node->collisionRect.width, node->collisionRect.height}, node->UID)) {
-            if (CheckMapCollision((Rectangle) {node->collisionRect.x, node->collisionRect.y + 1, node->collisionRect.width, node->collisionRect.height})) {
-                node->position.y += 1.0f;
-                node->collisionRect = (Rectangle){node->position.x + 15, node->position.y+31, 18, 9};
-            }
+            node->position.y += 1.0f;
+            node->collisionRect = (Rectangle){node->position.x + 15, node->position.y+31, 18, 9};
         }
     }
 }
@@ -164,4 +224,56 @@ bool CheckNodeCollision(Rectangle pos, int UID) {
         temp1 = temp1->next;
     }
     return true;
+}
+
+void MakeMap(int mapID) {
+    int* data = 0;
+    int length = 0;
+    switch (mapID) {
+        case TEST_LEVEL:
+            map_width = 12;
+            map_height = 10;
+            
+            int temp[] = {262,282,282,282,282,282,285,282,282,282,282,282,262,0,0,0,
+                262,42,42,42,42,42,42,42,42,42,42,42,262,0,0,0,
+                262,42,42,42,42,42,42,42,42,42,42,42,262,0,0,0,
+                262,42,42,42,42,42,42,42,42,42,42,42,262,0,0,0,
+                262,42,42,42,42,42,42,42,42,42,42,42,262,0,0,0,
+                262,42,42,42,42,42,42,42,42,42,42,42,262,0,0,0,
+                262,42,42,42,42,42,42,42,42,42,42,42,262,0,0,0,
+                262,42,42,42,42,42,42,42,42,42,42,42,262,0,0,0,
+                262,42,42,42,42,42,42,42,42,42,42,42,262,0,0,0,
+                262,42,42,42,42,42,42,42,42,42,42,42,262,0,0,0,
+                2,282,282,282,282,282,282,282,282,282,282,282,2,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+            
+            length = sizeof(temp)/sizeof(int);
+            data = calloc(length, sizeof(int));
+            memcpy(data, temp, sizeof(temp));
+            break;
+            
+        default:
+            
+            break;
+    }
+    
+    int x = 0;
+    int y = 0;
+    
+    for (int j = 0; j < length; j++) {
+        if (data[j] != 0 ) { //There's a bunch of stupid 0s in the map data. So we skip that.
+            CreateMapNode(data[j], x*TILESIZE, y*TILESIZE);
+            x++;
+            if (x > map_width) {
+                x = 0;
+                y++;
+            }
+        }
+    }
+    free(data); //do we gotta do this?, if we wanna save 1.2MB of memory, yes...
+
 }

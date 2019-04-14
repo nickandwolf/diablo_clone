@@ -22,21 +22,19 @@ void InitRender() {
 void RenderDraw() {
     BeginDrawing();
     ClearBackground(RAYWHITE);
-    //create a Y build order?!?
-    MapTile* tile = MapHead->next;
-    while (tile != NULL) {
-        
-        DrawTextureRec(terrainSheet, tile->frameRect, (Vector2) {tile->position.x, tile->position.y}, WHITE);
-        DrawRectangleLines(tile->collisionRect.x, tile->collisionRect.y, tile->collisionRect.width, tile->collisionRect.height, RED);
-        tile = tile->next;
-    }
     
+    //create a Y build order?!?
     //MARK: CPU Intensive stupid solution
-    for (int y = 0; y < MAPHEIGHT*TILESIZE; y++) {
+    for (int y = -TILESIZE; y < MAPHEIGHT*TILESIZE; y++) {
         Node* current = NodeHead->next;
         while (current != NULL) {
             if (y == current->position.y) {
-                DrawTextureRec(masterSheet, current->frameRect, current->position, WHITE);
+                if (current->UID == 0) {
+                    DrawTextureRec(terrainSheet, current->frameRect, current->position, WHITE);
+                }
+                else {
+                    DrawTextureRec(masterSheet, current->frameRect, current->position, WHITE);
+                }
                 DrawRectangleLines(current->collisionRect.x, current->collisionRect.y, current->collisionRect.width, current->collisionRect.height, RED);
             }
             current = current->next;

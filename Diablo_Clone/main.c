@@ -11,7 +11,6 @@
 #include <string.h>
 #include <stdio.h>
 #include "raylib.h"
-#include "Map.h"
 #include "Node.h"
 #include "Render.h"
 
@@ -27,13 +26,11 @@
 //END TEMP
 
 Node * NodeHead;
-MapTile* MapHead;
 
 const int TILESIZE = 48; //So collisions work, I guess
 
 int main(int argc, const char * argv[]) {
     InitRender();
-    InitMapHead();
     InitHeadNode();
     
     MakeMap(TEST_LEVEL);
