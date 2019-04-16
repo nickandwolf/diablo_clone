@@ -91,6 +91,9 @@ void CreateNode(int ID) {
             temp->UID = master_UID;
             temp->collisionRect = (Rectangle){temp->position.x + 15, temp->position.y+31, 18, 9};
             temp->layer = 2;
+            
+            
+            
             break;
             
         case 1:
@@ -136,7 +139,7 @@ void CreateMapNode(int ID, int x, int y) {
             temp->ID = ID;
             temp->position = (Vector2){x, y};
             temp->collisionRect = (Rectangle){temp->position.x, temp->position.y, 48, 48};
-            temp->layer = 3;
+            temp->layer = 1;
             break;
             
         case TOP_WALL:
@@ -144,7 +147,7 @@ void CreateMapNode(int ID, int x, int y) {
             temp->ID = ID;
             temp->position = (Vector2){x, y};
             temp->collisionRect = (Rectangle){temp->position.x, temp->position.y+24, 48, 24};
-            temp->layer = 3;
+            temp->layer = 1;
             break;
             
         case BOTTOM_WALL:
@@ -193,32 +196,36 @@ void UpdateNode() {
     }
 }
 
-void HandleInput(Node * node) { //TODO: add freakin' collision detection
-    if (IsKeyDown(KEY_RIGHT)) {
+void HandleInput(Node * node) {
+    if (IsKeyDown(MoveRightKey)) {
         if (CheckNodeCollision((Rectangle) {node->collisionRect.x + 1, node->collisionRect.y, node->collisionRect.width, node->collisionRect.height}, node->UID)) {
             node->position.x += 1.0f;
             node->collisionRect = (Rectangle){node->position.x + 15, node->position.y+31, 18, 9};
+            camera.offset.x -= 1.0f;
         }
     }
     
-    else if (IsKeyDown(KEY_LEFT)) {
+    else if (IsKeyDown(MoveLeftKey)) {
         if (CheckNodeCollision((Rectangle) {node->collisionRect.x - 1, node->collisionRect.y, node->collisionRect.width, node->collisionRect.height}, node->UID)) {
             node->position.x -= 1.0f;
             node->collisionRect = (Rectangle){node->position.x + 15, node->position.y+31, 18, 9};
+            camera.offset.x += 1.0f;
         }
     }
     
-    if (IsKeyDown(KEY_UP)) {
+    if (IsKeyDown(MoveUpKey)) {
         if (CheckNodeCollision((Rectangle) {node->collisionRect.x, node->collisionRect.y - 1, node->collisionRect.width, node->collisionRect.height}, node->UID)) {
             node->position.y -= 1.0f;
             node->collisionRect = (Rectangle){node->position.x + 15, node->position.y+31, 18, 9};
+            camera.offset.y += 1.0f;
         }
     }
     
-    else if (IsKeyDown(KEY_DOWN)) {
+    else if (IsKeyDown(MoveDownKey)) {
         if (CheckNodeCollision((Rectangle) {node->collisionRect.x, node->collisionRect.y + 1, node->collisionRect.width, node->collisionRect.height}, node->UID)) {
             node->position.y += 1.0f;
             node->collisionRect = (Rectangle){node->position.x + 15, node->position.y+31, 18, 9};
+            camera.offset.y -= 1.0f;
         }
     }
 }

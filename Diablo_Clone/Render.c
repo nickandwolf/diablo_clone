@@ -17,11 +17,19 @@ void InitRender() {
     mainSheet3 = LoadTexture("Assets/sheet3.png");
     mainSheet4 = LoadTexture("Assets/sheet4.png");
     terrainSheet = LoadTexture("Assets/terrain.png");
+    
+    //TODO: Have character variable for this shit
+    camera.offset = (Vector2) {SCREEN_WIDTH/2 - 24 - 60, SCREEN_HEIGHT/2 - 24 - 60}; //half-screen, half-sprite, current x/y
+    camera.target = (Vector2) {0, 0};
+    camera.rotation = 0.0f;
+    camera.zoom = 1.0f; //TODO: FIGURE OUT ZOOM MATH!
 }
 
 void RenderDraw() {
     BeginDrawing();
     ClearBackground(RAYWHITE);
+    
+    BeginMode2D(camera);
     
     for (int layer = 0; layer <= 3; layer++) {
         Node* current = NodeHead->next;
@@ -34,15 +42,20 @@ void RenderDraw() {
                     DrawTextureRec(masterSheet, current->frameRect, current->position, WHITE);
                 }
             }
+            
+            //collision debug
             DrawRectangleLines(current->collisionRect.x, current->collisionRect.y, current->collisionRect.width, current->collisionRect.height, RED);
             
             current = current->next;
         }
     }
     
+    EndMode2D();
     //STUPID DEBUG SHIT
-    int dude = GetFPS();
-    printf("FPS: %i", dude);
+//    int dude = GetFPS();
+//    printf("FPS: %i", dude);
+//
+    DrawRectangle(SCREEN_WIDTH/2 -5, SCREEN_HEIGHT/2 - 5, 10, 10, RED);
     EndDrawing();
 }
 

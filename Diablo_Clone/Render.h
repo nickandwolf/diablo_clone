@@ -23,6 +23,7 @@ static int currentFrame = 0;
 static int frameCounter = 0;
 
 extern Node * NodeHead;
+extern Camera2D camera;
 extern const int MAPHEIGHT;
 
 static Texture2D mainSheet1;   // We are going with a unique approach.

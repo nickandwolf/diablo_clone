@@ -13,6 +13,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "raylib.h"
+#include "Input.h"
 
 enum NODE_ID {
     PLAYER //placeholder for classes
@@ -48,6 +49,7 @@ extern const int TILESIZE;
 static int map_width = 0;
 static int map_height = 0;
 
+extern Camera2D camera;
 extern Node* NodeHead;
 static int master_UID = 1; //MAP TILES ARE 0 RIGHT NOW
                            //IF WE HAVE DESTRUCTABLE SHIT, WE'LL ADD IT BACK
