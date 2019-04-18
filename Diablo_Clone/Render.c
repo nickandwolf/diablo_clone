@@ -19,16 +19,17 @@ void InitRender() {
     terrainSheet = LoadTexture("Assets/terrain.png");
     
     //TODO: Have character variable for this shit
-    camera.target = MainPlayer->position;
+    //TODO: Gotta get sprites working... "more" correctly
+    camera.target = (Vector2) {MainPlayer->position.x + 24, MainPlayer->position.y + 24};
     camera.offset = (Vector2) {SCREEN_WIDTH/2 - MainPlayer->frameRect.width/2 - MainPlayer->position.x, SCREEN_HEIGHT/2 - MainPlayer->frameRect.height/2 - MainPlayer->position.y}; //half-screen, half-sprite, current x/y
     
     camera.rotation = 0.0f;
-    camera.zoom = 1.0f; //TODO: FIGURE OUT ZOOM MATH!
+    camera.zoom = 1.5f; //TODO: FIGURE OUT ZOOM MATH!
 }
 
 void RenderDraw() {
     BeginDrawing();
-    ClearBackground(RAYWHITE);
+    ClearBackground(BLACK);
     
     BeginMode2D(camera);
     
@@ -56,7 +57,7 @@ void RenderDraw() {
 //    int dude = GetFPS();
 //    printf("FPS: %i", dude);
 //
-    //DrawRectangle(SCREEN_WIDTH/2 -5, SCREEN_HEIGHT/2 - 5, 10, 10, RED);
+    DrawRectangle(SCREEN_WIDTH/2 -5, SCREEN_HEIGHT/2 - 5, 10, 10, RED);
     EndDrawing();
 }
 

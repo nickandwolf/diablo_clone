@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4417193F2268985F0056CE77 /* Camera.c in Sources */ = {isa = PBXBuildFile; fileRef = 4417193E2268985F0056CE77 /* Camera.c */; };
 		441DAEC82265CC5800F56693 /* Input.c in Sources */ = {isa = PBXBuildFile; fileRef = 441DAEC72265CC5800F56693 /* Input.c */; };
 		44BF3460225A0E6700179A39 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 44BF345F225A0E6700179A39 /* main.c */; };
 		44BF3468225A0ED200179A39 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44BF3467225A0ED200179A39 /* OpenGL.framework */; };
@@ -33,6 +34,8 @@
 		44058E0C225B505700982495 /* sheet1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sheet1.png; sourceTree = "<group>"; };
 		44058E0D225B505700982495 /* sheet2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sheet2.png; sourceTree = "<group>"; };
 		4417193C226897F70056CE77 /* main_menu.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = main_menu.ogg; sourceTree = "<group>"; };
+		4417193D2268985F0056CE77 /* Camera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
+		4417193E2268985F0056CE77 /* Camera.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Camera.c; sourceTree = "<group>"; };
 		441DAEC62265CC5800F56693 /* Input.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Input.h; sourceTree = "<group>"; };
 		441DAEC72265CC5800F56693 /* Input.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Input.c; sourceTree = "<group>"; };
 		44BF345C225A0E6700179A39 /* Diablo_Clone */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Diablo_Clone; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -95,6 +98,8 @@
 			children = (
 				44058E09225B503600982495 /* Assets */,
 				44BF345F225A0E6700179A39 /* main.c */,
+				4417193D2268985F0056CE77 /* Camera.h */,
+				4417193E2268985F0056CE77 /* Camera.c */,
 				44BF346D225A115500179A39 /* Node.h */,
 				44BF346E225A115500179A39 /* Node.c */,
 				44BF3470225A151000179A39 /* Render.h */,
@@ -172,6 +177,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				441DAEC82265CC5800F56693 /* Input.c in Sources */,
+				4417193F2268985F0056CE77 /* Camera.c in Sources */,
 				44BF3460225A0E6700179A39 /* main.c in Sources */,
 				44BF346F225A115500179A39 /* Node.c in Sources */,
 				44BF3472225A151000179A39 /* Render.c in Sources */,

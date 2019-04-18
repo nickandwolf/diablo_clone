@@ -246,28 +246,28 @@ void HandleInput() {
     if (IsKeyDown(MoveRightKey)) {
         if (CheckNodeCollision(MainPlayer,1,0)) {
             MainPlayer->position.x += 1.0f;
-            camera.offset.x -= 1.0f;
+            camera.offset.x -= 1.0f * camera.zoom;
         }
     }
     
     else if (IsKeyDown(MoveLeftKey)) {
         if (CheckNodeCollision(MainPlayer,-1,0)) {
             MainPlayer->position.x -= 1.0f;
-            camera.offset.x += 1.0f;
+            camera.offset.x += 1.0f * camera.zoom;
         }
     }
     
     if (IsKeyDown(MoveUpKey)) {
         if (CheckNodeCollision(MainPlayer,0,-1)) {
             MainPlayer->position.y -= 1.0f;
-            camera.offset.y += 1.0f;
+            camera.offset.y += 1.0f * camera.zoom;
         }
     }
     
     else if (IsKeyDown(MoveDownKey)) {
         if (CheckNodeCollision(MainPlayer,0,1)) {
             MainPlayer->position.y += 1.0f;
-            camera.offset.y -= 1.0f;
+            camera.offset.y -= 1.0f * camera.zoom;
         }
     }
 }
