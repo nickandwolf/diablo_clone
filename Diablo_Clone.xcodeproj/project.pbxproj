@@ -32,6 +32,7 @@
 		44058E0B225B505700982495 /* sheet4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sheet4.png; sourceTree = "<group>"; };
 		44058E0C225B505700982495 /* sheet1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sheet1.png; sourceTree = "<group>"; };
 		44058E0D225B505700982495 /* sheet2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sheet2.png; sourceTree = "<group>"; };
+		4417193C226897F70056CE77 /* main_menu.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = main_menu.ogg; sourceTree = "<group>"; };
 		441DAEC62265CC5800F56693 /* Input.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Input.h; sourceTree = "<group>"; };
 		441DAEC72265CC5800F56693 /* Input.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Input.c; sourceTree = "<group>"; };
 		44BF345C225A0E6700179A39 /* Diablo_Clone */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Diablo_Clone; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -62,6 +63,7 @@
 		44058E09225B503600982495 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				4417193C226897F70056CE77 /* main_menu.ogg */,
 				44E3B2F1225F55BB00CB8904 /* terrain.png */,
 				44058E0C225B505700982495 /* sheet1.png */,
 				44058E0D225B505700982495 /* sheet2.png */,
