@@ -21,10 +21,11 @@ enum NODE_ID {
 
 enum TILE_ID { //This dumb shit is the ID from the editor
     FLOOR = 42, //This is probably dumb and can be merged with the NODE_ID enum later
-    WALL = 262,
+    TOP_WALL = 262,
+    BOTTOM_WALL = 282,
+    FULL_WALL = 3, //This is a whole wall
     TAPESTRY_WALL = 285,
-    TOP_WALL = 282,
-    BOTTOM_WALL = 2, //custom made, yo just for the collision box
+    FILLER_WALL = 2, //custom made, yo just for the collision box
     DOOR
 };
 
@@ -39,7 +40,10 @@ typedef struct Node {
     //Texture2D spriteSheet; // All sprites use the same 4 character sheets
     Rectangle frameRect;     // Also there's a lot of white space between sprites
     struct Node* next;       // so we'll have to clean that up in time
-    Rectangle collisionRect;
+    float COLLISION_X; //can't assign constants during runtime, so we'll just pretend
+    float COLLISION_Y; //I mean, technically we can but we really shouldn't
+    float COLLISION_WIDTH;
+    float COLLISION_HEIGHT;
     int layer;               //0 = floor; 1 = stuff on floor; 2 = higher than that, like players; 3 = highest so FAR
 } Node;
 
@@ -51,6 +55,7 @@ static int map_height = 0;
 
 extern Camera2D camera;
 extern Node* NodeHead;
+extern Node* MainPlayer;
 static int master_UID = 1; //MAP TILES ARE 0 RIGHT NOW
                            //IF WE HAVE DESTRUCTABLE SHIT, WE'LL ADD IT BACK
 
@@ -72,22 +77,31 @@ Node* GetNodeXY(int x, int y);
 
 void CreateNode(int ID);
 
-void CreateMapNode(int ID, int x, int y);
-
-void UpdateNode(void);
-
-void HandleInput(Node * node);
-
-bool CheckNodeCollision(Rectangle pos, int UID);
-
-bool CheckNodeSpriteCollision(Rectangle pos, int UID); //TODO: implement
+void CreatePlayer(void);
 
 void MakeMap(int mapID);
+
+void CreateMapNode(int ID, int x, int y);
 
 void MergeSort(Node** headRef);
 
 Node* SortedMerge(Node* a, Node* b);
 
 void FrontBackSplit(Node* source, Node** frontRef, Node** backRef);
+
+void UpdateNode(void);
+
+void HandleInput(void);
+
+bool CheckNodeCollision(Node * node, int x, int y);
+
+bool CheckNodeSpriteCollision(Rectangle pos, int UID); //TODO: implement
+
+Rectangle GetNodeCollisionRect(Node* node);
+
+Rectangle GetNodeCollisionRectXYWH(float collision_x, float collision_y, float collision_width, float collision_height);
+
+bool GetNullRect(Node * rect);
+
 
 #endif /* Node_h */

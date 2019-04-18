@@ -19,8 +19,9 @@ void InitRender() {
     terrainSheet = LoadTexture("Assets/terrain.png");
     
     //TODO: Have character variable for this shit
-    camera.offset = (Vector2) {SCREEN_WIDTH/2 - 24 - 60, SCREEN_HEIGHT/2 - 24 - 60}; //half-screen, half-sprite, current x/y
-    camera.target = (Vector2) {0, 0};
+    camera.target = MainPlayer->position;
+    camera.offset = (Vector2) {SCREEN_WIDTH/2 - MainPlayer->frameRect.width/2 - MainPlayer->position.x, SCREEN_HEIGHT/2 - MainPlayer->frameRect.height/2 - MainPlayer->position.y}; //half-screen, half-sprite, current x/y
+    
     camera.rotation = 0.0f;
     camera.zoom = 1.0f; //TODO: FIGURE OUT ZOOM MATH!
 }
@@ -44,7 +45,7 @@ void RenderDraw() {
             }
             
             //collision debug
-            DrawRectangleLines(current->collisionRect.x, current->collisionRect.y, current->collisionRect.width, current->collisionRect.height, RED);
+            //DrawRectangleLinesEx(GetNodeCollisionRect(current), 1, RED);
             
             current = current->next;
         }
@@ -55,7 +56,7 @@ void RenderDraw() {
 //    int dude = GetFPS();
 //    printf("FPS: %i", dude);
 //
-    DrawRectangle(SCREEN_WIDTH/2 -5, SCREEN_HEIGHT/2 - 5, 10, 10, RED);
+    //DrawRectangle(SCREEN_WIDTH/2 -5, SCREEN_HEIGHT/2 - 5, 10, 10, RED);
     EndDrawing();
 }
 

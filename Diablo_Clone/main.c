@@ -16,22 +16,20 @@
 
 Camera2D camera;
 Node * NodeHead;
+Node * MainPlayer;
 //we could have a second NodeHead for map shit...
 
 const int TILESIZE = 48; //So collisions work, I guess
 
 
 int main(int argc, const char * argv[]) {
-
-    InitRender();
     InitHeadNode();
-    
-    MakeMap(TEST_LEVEL);
-    
-    CreateNode(PLAYER);
+    CreatePlayer();
     CreateNode(1);
-    
+    MakeMap(TEST_LEVEL);
     MergeSort(&NodeHead); //make a thingy saying if we should change this or not...
+    
+    InitRender();
     
     while (!WindowShouldClose()) {
         RenderDraw();
