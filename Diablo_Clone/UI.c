@@ -1,10 +1,9 @@
 //
-//  Camera.c
+//  UI.c
 //  Diablo_Clone
 //
-//  Created by Nicholas A Nelson on 4/18/19.
+//  Created by Nicholas A Nelson on 4/19/19.
 //  Copyright © 2019 Nick & Wolf. All rights reserved.
 //
 
-#include "Camera.h"
-
+#include "UI.h"
