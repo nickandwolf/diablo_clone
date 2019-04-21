@@ -11,6 +11,8 @@
 		442A4CDD226C0B34006FFA96 /* Render.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 442A4CDB226C0B34006FFA96 /* Render.cpp */; };
 		442A4CE0226C0B68006FFA96 /* Window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 442A4CDE226C0B68006FFA96 /* Window.cpp */; };
 		442A4CE3226C4BFC006FFA96 /* ParentObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 442A4CE1226C4BFC006FFA96 /* ParentObject.cpp */; };
+		443900A2226C7F7900AF8210 /* Action.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 443900A0226C7F7900AF8210 /* Action.cpp */; };
+		443900A5226C81B100AF8210 /* InputHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 443900A3226C81B100AF8210 /* InputHandler.cpp */; };
 		446B6F3B2269C3F40032AE4B /* UI.c in Sources */ = {isa = PBXBuildFile; fileRef = 446B6F3A2269C3F40032AE4B /* UI.c */; };
 		44A2A11E226B25370009889D /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44A2A11C226B25370009889D /* Player.cpp */; };
 		44BF3460225A0E6700179A39 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44BF345F225A0E6700179A39 /* main.cpp */; };
@@ -46,6 +48,10 @@
 		442A4CDF226C0B68006FFA96 /* Window.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Window.hpp; sourceTree = "<group>"; };
 		442A4CE1226C4BFC006FFA96 /* ParentObject.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ParentObject.cpp; sourceTree = "<group>"; };
 		442A4CE2226C4BFC006FFA96 /* ParentObject.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ParentObject.hpp; sourceTree = "<group>"; };
+		443900A0226C7F7900AF8210 /* Action.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Action.cpp; sourceTree = "<group>"; };
+		443900A1226C7F7900AF8210 /* Action.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Action.hpp; sourceTree = "<group>"; };
+		443900A3226C81B100AF8210 /* InputHandler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = InputHandler.cpp; sourceTree = "<group>"; };
+		443900A4226C81B100AF8210 /* InputHandler.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = InputHandler.hpp; sourceTree = "<group>"; };
 		446B6F392269C3F40032AE4B /* UI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UI.h; sourceTree = "<group>"; };
 		446B6F3A2269C3F40032AE4B /* UI.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = UI.c; sourceTree = "<group>"; };
 		44A2A11C226B25370009889D /* Player.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Player.cpp; sourceTree = "<group>"; };
@@ -116,6 +122,10 @@
 				44A2A11C226B25370009889D /* Player.cpp */,
 				442A4CDC226C0B34006FFA96 /* Render.hpp */,
 				442A4CDB226C0B34006FFA96 /* Render.cpp */,
+				443900A1226C7F7900AF8210 /* Action.hpp */,
+				443900A0226C7F7900AF8210 /* Action.cpp */,
+				443900A4226C81B100AF8210 /* InputHandler.hpp */,
+				443900A3226C81B100AF8210 /* InputHandler.cpp */,
 				442A4CDF226C0B68006FFA96 /* Window.hpp */,
 				442A4CDE226C0B68006FFA96 /* Window.cpp */,
 				446B6F392269C3F40032AE4B /* UI.h */,
@@ -202,9 +212,11 @@
 				44BF3460225A0E6700179A39 /* main.cpp in Sources */,
 				442A4CE0226C0B68006FFA96 /* Window.cpp in Sources */,
 				44A2A11E226B25370009889D /* Player.cpp in Sources */,
+				443900A5226C81B100AF8210 /* InputHandler.cpp in Sources */,
 				44BF346F225A115500179A39 /* Node.c in Sources */,
 				44BF3472225A151000179A39 /* Render.c in Sources */,
 				442A4CDD226C0B34006FFA96 /* Render.cpp in Sources */,
+				443900A2226C7F7900AF8210 /* Action.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

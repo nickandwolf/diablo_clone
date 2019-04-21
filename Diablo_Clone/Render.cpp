@@ -19,7 +19,7 @@ void InitRender() {
 void RenderDraw() {
     UpdateFrameCount();
     ResortVectorCheck(); //uhhh...makes no sense with Y values D:
-                         //maybe we'll have a "Inanimate" or "HasMoved" bool to help that later.
+                         //maybe we'll have "Inanimate" be a thing
     
     BeginDrawing();
     ClearBackground(BLACK);
