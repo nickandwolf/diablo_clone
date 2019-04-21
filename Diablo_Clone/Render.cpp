@@ -17,7 +17,18 @@ void InitRender() {
 }
 
 void RenderDraw() {
+    UpdateFrameCount();
+    ResortVectorCheck(); //uhhh...makes no sense with Y values D:
+                         //maybe we'll have a "Inanimate" or "HasMoved" bool to help that later.
     
+    BeginDrawing();
+    ClearBackground(BLACK);
+    
+    for(std::vector<ParentObject>::iterator it = RenderObjects.begin(); it != RenderObjects.end(); ++it) {
+        DrawTextureRec(it->GetSprite(), it->GetSpriteFrame(), it->GetPosition(), WHITE);
+    }
+    
+    EndDrawing();
 }
 
 void RenderUpdate(void);
@@ -28,8 +39,9 @@ int GetFrameCount() {
 
 void UpdateFrameCount() {
     frameCount++;
-    if (frameCount > GetFPS())
-        frameCount = 0;
+    
+    if (frameCount > TARGET_FPS)
+        frameCount = 1;
 }
 
 void SortParentObjectsVector() {
@@ -41,4 +53,11 @@ bool SortParentObjectsMethod(ParentObject v1, ParentObject v2) {
     Vector2 p2 = v2.GetPosition();
     
     return (p1.y < p2.y);
+}
+
+void ResortVectorCheck() {
+    if (RenderObjects.size() != RenderObjectsSize) {
+        RenderObjectsSize = (int)RenderObjects.size();
+        SortParentObjectsVector();
+    }
 }

@@ -17,6 +17,9 @@
 static int frameCount;
 
 extern const int TILESIZE;
+extern const int TARGET_FPS;
+
+static int RenderObjectsSize;
 
 extern std::vector<ParentObject> RenderObjects;
 
@@ -35,5 +38,7 @@ void UpdateFrameCount(void);
 void SortParentObjectsVector(void);
 
 bool SortParentObjectsMethod(ParentObject v1, ParentObject v2);
+
+void ResortVectorCheck(void);
 
 #endif /* Render_hpp */

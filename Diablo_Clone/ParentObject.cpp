@@ -8,44 +8,64 @@
 
 #include "ParentObject.hpp"
 
-void UpdateP(void);
-
-//getter/setters
-void ParentObject::SetPositionP(Vector2 newPos) {
-    ParentObject::SetPosition(newPos);
-}
-void ParentObject::SetPositionP(float x, float y) {
-    ParentObject::SetPosition(x, y);
-}
-Vector2 ParentObject::GetPositionP() {
-    return ParentObject::GetPosition();
+//MAIN SHIT
+void ParentObject::Update(void) {
+    
 }
 
-void ParentObject::SetSpriteP(Texture2D newTex) {
-    ParentObject::SetSprite(newTex);
+//GETS / SETS
+void ParentObject::SetPosition(Vector2 newPos) {
+    position = newPos;
+    
 }
-Texture2D ParentObject::GetSpriteP() {
-    return ParentObject::GetSprite();
+void ParentObject::SetPosition(float x, float y) {
+    position.x = x;
+    position.y = y;
+}
+Vector2 ParentObject::GetPosition() {
+    return position;
 }
 
-void ParentObject::SetSpriteFrameP(Rectangle newRect) {
-    ParentObject::SetSpriteFrame(newRect);
+void ParentObject::SetSprite(Texture2D newTex) {
+    UnloadTexture(spriteSheet);
+    spriteSheet = newTex;
 }
-void ParentObject::SetSpriteFrameP(int x, int y, int width, int height) {
-    ParentObject::SetSpriteFrame(x,y,width,height);
+Texture2D ParentObject::GetSprite() {
+    return spriteSheet;
 }
-Rectangle ParentObject::GetSpriteFrameP() { //Maybe have another method that returns an array of shit?
-    return ParentObject::GetSpriteFrame();
+
+void ParentObject::SetSpriteFrame(Rectangle newRect) {
+    spriteFrame = newRect;
 }
-void ParentObject::SetCollisionP(Rectangle newColl) {
-    ParentObject::SetCollision(newColl);
+void ParentObject::SetSpriteFrame(int x, int y, int width, int height) {
+    spriteFrame.x = x;
+    spriteFrame.y = y;
+    spriteFrame.width = width;
+    spriteFrame.height = height;
 }
-void ParentObject::SetCollisionP(int x, int y, int width, int height) {
-    ParentObject::SetCollision(x,y,width,height);
+Rectangle ParentObject::GetSpriteFrame(void) {
+    return spriteFrame;
 }
-Rectangle ParentObject::GetCollisionP() {
-    return ParentObject::GetCollision();
+
+void ParentObject::SetCollision(Rectangle newColl) {
+    collisionRect = newColl;
 }
-Rectangle ParentObject::GetCollisionP(int x, int y) { //for checking /IF/ something will collide
-    return ParentObject::GetCollision(x,y);
+void ParentObject::SetCollision(int x, int y, int width, int height) {
+    collisionRect.x = x;
+    collisionRect.y = y;
+    collisionRect.width = width;
+    collisionRect.height = height;
+}
+Rectangle ParentObject::GetCollision(void) {
+    return collisionRect;
+}
+Rectangle ParentObject::GetCollision(int x, int y) { //for checking /IF/ something will collide
+    return (Rectangle) {collisionRect.x + x, collisionRect.y + y, collisionRect.width, collisionRect.height};
+}
+
+void ParentObject::SetLayer(int newL) {
+    layer = newL;
+}
+int ParentObject::GetLayer() {
+    return layer;
 }

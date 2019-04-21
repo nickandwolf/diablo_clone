@@ -13,7 +13,7 @@
 
 static const int SCREEN_WIDTH = 1280;
 static const int SCREEN_HEIGHT = 720;
-static const int TARGET_FPS = 60;
+extern const int TARGET_FPS;
 
 void InitScreen(void);
 //maybe we'll have a thing resize the window later for resolution garbage. For now, stick with the target...
