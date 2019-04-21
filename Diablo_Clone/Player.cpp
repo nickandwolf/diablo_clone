@@ -16,6 +16,13 @@ Player::Player() {
     collisionRect = (Rectangle) {15, 31, 18, 9};
     layer = 2;
 }
+Player::Player(float x, float y) {
+    spriteSheet = LoadTexture("Assets/sheet1.png");
+    spriteFrame = (Rectangle){0,0,48,48};
+    position = (Vector2){x,y};
+    collisionRect = (Rectangle) {15, 31, 18, 9};
+    layer = 2;
+}
 void Player::Update(void) {
     
 }

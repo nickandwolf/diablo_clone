@@ -1,45 +1,42 @@
 //
-//  Object.hpp
+//  ParentObject.hpp
 //  Diablo_Clone
 //
-//  Created by Nicholas A Nelson on 4/20/19.
+//  Created by Nicholas A Nelson on 4/21/19.
 //  Copyright © 2019 Nick & Wolf. All rights reserved.
 //
-/*
- So this is everything that isn't part of the map.
- It's gonna take a bit to conver this properly
- */
 
-#ifndef Player_hpp
-#define Player_hpp
+#ifndef ParentObject_hpp
+#define ParentObject_hpp
 
-/*TODO:
- FRAME ANIMATION!
- */
-
-#include <vector>
 #include "raylib.h"
-#include "ParentObject.hpp"
 
-extern std::vector<ParentObject> RenderObjects;
-
-class Player : public ParentObject
+/*
+ This is a wrapper class
+ */
+class ParentObject
 {
-private:
-    //Drawing Variables
-    int layer; //0 = floor; 1 = stuff on floor; 2 = higher than that, like players; 3 = highest so FAR
-    Texture2D spriteSheet;
-    Rectangle spriteFrame;
-    Vector2 position;
-    
-    //Collision bullshit
-    Rectangle collisionRect;
-    
-
 public:
-    //Basic Methods
-    Player(void); //initializes the player
-    Player(float x, float y);
+    void UpdateP(void);
+    
+    //getter/setters
+    void SetPositionP(Vector2 newPos);
+    void SetPositionP(float x, float y);
+    Vector2 GetPositionP(void);
+    
+    void SetSpriteP(Texture2D newTex);
+    Texture2D GetSpriteP(void);
+    
+    void SetSpriteFrameP(Rectangle newRect);
+    void SetSpriteFrameP(int x, int y, int width, int height);
+    Rectangle GetSpriteFrameP(void); //Maybe have another method that returns an array of shit?
+    
+    void SetCollisionP(Rectangle newColl);
+    void SetCollisionP(int x, int y, int width, int height);
+    Rectangle GetCollisionP(void);
+    Rectangle GetCollisionP(int x, int y); //for checking /IF/ something will collide
+    
+private:
     virtual void Update(void);
     
     //we put actual player shit down here...
@@ -62,5 +59,4 @@ public:
     virtual Rectangle GetCollision(int x, int y); //for checking /IF/ something will collide
 };
 
-
-#endif /* Player_hpp */
+#endif /* ParentObject_hpp */
