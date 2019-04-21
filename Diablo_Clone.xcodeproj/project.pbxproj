@@ -8,9 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		441DAEC82265CC5800F56693 /* Input.c in Sources */ = {isa = PBXBuildFile; fileRef = 441DAEC72265CC5800F56693 /* Input.c */; };
+		442A4CDD226C0B34006FFA96 /* Render.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 442A4CDB226C0B34006FFA96 /* Render.cpp */; };
+		442A4CE0226C0B68006FFA96 /* Window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 442A4CDE226C0B68006FFA96 /* Window.cpp */; };
 		446B6F3B2269C3F40032AE4B /* UI.c in Sources */ = {isa = PBXBuildFile; fileRef = 446B6F3A2269C3F40032AE4B /* UI.c */; };
-		44A2A11E226B25370009889D /* Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44A2A11C226B25370009889D /* Object.cpp */; };
-		44BF3460225A0E6700179A39 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 44BF345F225A0E6700179A39 /* main.c */; };
+		44A2A11E226B25370009889D /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44A2A11C226B25370009889D /* Player.cpp */; };
+		44BF3460225A0E6700179A39 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44BF345F225A0E6700179A39 /* main.cpp */; };
 		44BF3468225A0ED200179A39 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44BF3467225A0ED200179A39 /* OpenGL.framework */; };
 		44BF346C225A104100179A39 /* libraylib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 44BF346B225A104100179A39 /* libraylib.a */; };
 		44BF346F225A115500179A39 /* Node.c in Sources */ = {isa = PBXBuildFile; fileRef = 44BF346E225A115500179A39 /* Node.c */; };
@@ -37,12 +39,16 @@
 		4417193C226897F70056CE77 /* main_menu.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = main_menu.ogg; sourceTree = "<group>"; };
 		441DAEC62265CC5800F56693 /* Input.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Input.h; sourceTree = "<group>"; };
 		441DAEC72265CC5800F56693 /* Input.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Input.c; sourceTree = "<group>"; };
+		442A4CDB226C0B34006FFA96 /* Render.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Render.cpp; sourceTree = "<group>"; };
+		442A4CDC226C0B34006FFA96 /* Render.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Render.hpp; sourceTree = "<group>"; };
+		442A4CDE226C0B68006FFA96 /* Window.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Window.cpp; sourceTree = "<group>"; };
+		442A4CDF226C0B68006FFA96 /* Window.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Window.hpp; sourceTree = "<group>"; };
 		446B6F392269C3F40032AE4B /* UI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UI.h; sourceTree = "<group>"; };
 		446B6F3A2269C3F40032AE4B /* UI.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = UI.c; sourceTree = "<group>"; };
-		44A2A11C226B25370009889D /* Object.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Object.cpp; sourceTree = "<group>"; };
-		44A2A11D226B25370009889D /* Object.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Object.hpp; sourceTree = "<group>"; };
+		44A2A11C226B25370009889D /* Player.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Player.cpp; sourceTree = "<group>"; };
+		44A2A11D226B25370009889D /* Player.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Player.hpp; sourceTree = "<group>"; };
 		44BF345C225A0E6700179A39 /* Diablo_Clone */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Diablo_Clone; sourceTree = BUILT_PRODUCTS_DIR; };
-		44BF345F225A0E6700179A39 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		44BF345F225A0E6700179A39 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		44BF3467225A0ED200179A39 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		44BF3469225A0F1500179A39 /* libraylib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libraylib.a; path = "../raylib-2.0/lib/libraylib.a"; sourceTree = "<group>"; };
 		44BF346B225A104100179A39 /* libraylib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libraylib.a; path = "../../../../../../Desktop/PROGRAMMING/C/LIB/raylib-2.0.0-macOS/lib/libraylib.a"; sourceTree = "<group>"; };
@@ -100,13 +106,17 @@
 			isa = PBXGroup;
 			children = (
 				44058E09225B503600982495 /* Assets */,
-				44BF345F225A0E6700179A39 /* main.c */,
+				44BF345F225A0E6700179A39 /* main.cpp */,
+				44A2A11D226B25370009889D /* Player.hpp */,
+				44A2A11C226B25370009889D /* Player.cpp */,
+				442A4CDC226C0B34006FFA96 /* Render.hpp */,
+				442A4CDB226C0B34006FFA96 /* Render.cpp */,
+				442A4CDF226C0B68006FFA96 /* Window.hpp */,
+				442A4CDE226C0B68006FFA96 /* Window.cpp */,
 				446B6F392269C3F40032AE4B /* UI.h */,
 				446B6F3A2269C3F40032AE4B /* UI.c */,
 				44BF346D225A115500179A39 /* Node.h */,
 				44BF346E225A115500179A39 /* Node.c */,
-				44A2A11D226B25370009889D /* Object.hpp */,
-				44A2A11C226B25370009889D /* Object.cpp */,
 				44BF3470225A151000179A39 /* Render.h */,
 				44BF3471225A151000179A39 /* Render.c */,
 				441DAEC62265CC5800F56693 /* Input.h */,
@@ -183,10 +193,12 @@
 			files = (
 				441DAEC82265CC5800F56693 /* Input.c in Sources */,
 				446B6F3B2269C3F40032AE4B /* UI.c in Sources */,
-				44BF3460225A0E6700179A39 /* main.c in Sources */,
-				44A2A11E226B25370009889D /* Object.cpp in Sources */,
+				44BF3460225A0E6700179A39 /* main.cpp in Sources */,
+				442A4CE0226C0B68006FFA96 /* Window.cpp in Sources */,
+				44A2A11E226B25370009889D /* Player.cpp in Sources */,
 				44BF346F225A115500179A39 /* Node.c in Sources */,
 				44BF3472225A151000179A39 /* Render.c in Sources */,
+				442A4CDD226C0B34006FFA96 /* Render.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -309,6 +321,10 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QT94CX7WDC;
+				"EXCLUDED_SOURCE_FILE_NAMES[arch=*]" = (
+					"*.h,",
+					"*.c",
+				);
 				GCC_INPUT_FILETYPE = sourcecode.cpp.cpp;
 				HEADER_SEARCH_PATHS = "/Users/myogaman/Desktop/PROGRAMMING/C/LIB/raylib-2.0.0-macOS/include";
 				LIBRARY_SEARCH_PATHS = "/Users/myogaman/Desktop/PROGRAMMING/C/LIB/raylib-2.0.0-macOS/lib";
