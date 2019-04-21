@@ -32,13 +32,13 @@ void UpdateFrameCount() {
         frameCount = 0;
 }
 
-void SortVector() {
-    std::sort (RenderObjects.begin(), RenderObjects.end(),RenderObjectsMethod);
+void SortParentObjectsVector() {
+    std::sort (RenderObjects.begin(), RenderObjects.end(), SortParentObjectsMethod);
 }
 
-bool RenderObjectsMethod(ParentObject v1, ParentObject v2) {
-    Vector2 p1 = v1.GetPositionP();
-    Vector2 p2 = v2.GetPositionP();
+bool SortParentObjectsMethod(ParentObject v1, ParentObject v2) {
+    Vector2 p1 = v1.GetPosition();
+    Vector2 p2 = v2.GetPosition();
     
     return (p1.y < p2.y);
 }

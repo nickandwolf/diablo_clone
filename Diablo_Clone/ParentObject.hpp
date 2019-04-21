@@ -16,27 +16,17 @@
  */
 class ParentObject
 {
-public:
-    void UpdateP(void);
-    
-    //getter/setters
-    void SetPositionP(Vector2 newPos);
-    void SetPositionP(float x, float y);
-    Vector2 GetPositionP(void);
-    
-    void SetSpriteP(Texture2D newTex);
-    Texture2D GetSpriteP(void);
-    
-    void SetSpriteFrameP(Rectangle newRect);
-    void SetSpriteFrameP(int x, int y, int width, int height);
-    Rectangle GetSpriteFrameP(void); //Maybe have another method that returns an array of shit?
-    
-    void SetCollisionP(Rectangle newColl);
-    void SetCollisionP(int x, int y, int width, int height);
-    Rectangle GetCollisionP(void);
-    Rectangle GetCollisionP(int x, int y); //for checking /IF/ something will collide
-    
 private:
+    //Drawing Variables
+    int layer; //0 = floor; 1 = stuff on floor; 2 = higher than that, like players; 3 = highest so FAR
+    Texture2D spriteSheet;
+    Rectangle spriteFrame;
+    Vector2 position;
+    
+    //Collision bullshit
+    Rectangle collisionRect;
+    
+public:
     virtual void Update(void);
     
     //we put actual player shit down here...
@@ -57,6 +47,9 @@ private:
     virtual void SetCollision(int x, int y, int width, int height);
     virtual Rectangle GetCollision(void);
     virtual Rectangle GetCollision(int x, int y); //for checking /IF/ something will collide
+    
+    virtual void SetLayer(int newL);
+    virtual int GetLayer(void);
 };
 
 #endif /* ParentObject_hpp */

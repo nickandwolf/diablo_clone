@@ -25,41 +25,15 @@ extern std::vector<ParentObject> RenderObjects;
 
 class Player : public ParentObject
 {
-private:
-    //Drawing Variables
-    int layer; //0 = floor; 1 = stuff on floor; 2 = higher than that, like players; 3 = highest so FAR
-    Texture2D spriteSheet;
-    Rectangle spriteFrame;
-    Vector2 position;
-    
-    //Collision bullshit
-    Rectangle collisionRect;
-    
-
 public:
     //Basic Methods
     Player(void); //initializes the player
     Player(float x, float y);
-    virtual void Update(void);
+    void Update(void);
     
     //we put actual player shit down here...
     
     //getter/setters
-    virtual void SetPosition(Vector2 newPos);
-    virtual void SetPosition(float x, float y);
-    virtual Vector2 GetPosition(void);
-    
-    virtual void SetSprite(Texture2D newTex);
-    virtual Texture2D GetSprite(void);
-    
-    virtual void SetSpriteFrame(Rectangle newRect);
-    virtual void SetSpriteFrame(int x, int y, int width, int height);
-    virtual Rectangle GetSpriteFrame(void); //Maybe have another method that returns an array of shit?
-    
-    virtual void SetCollision(Rectangle newColl);
-    virtual void SetCollision(int x, int y, int width, int height);
-    virtual Rectangle GetCollision(void);
-    virtual Rectangle GetCollision(int x, int y); //for checking /IF/ something will collide
 };
 
 

@@ -32,8 +32,8 @@ int GetFrameCount(void);
 
 void UpdateFrameCount(void);
 
-void SortVector(void);
+void SortParentObjectsVector(void);
 
-bool RenderObjectsMethod(ParentObject v1, ParentObject v2);
+bool SortParentObjectsMethod(ParentObject v1, ParentObject v2);
 
 #endif /* Render_hpp */
