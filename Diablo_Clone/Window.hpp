@@ -4,7 +4,7 @@
 //
 //  Created by Nicholas A Nelson on 4/21/19.
 //  Copyright © 2019 Nick & Wolf. All rights reserved.
-//
+//  REQUIRES RAYLIB
 
 #ifndef Window_hpp
 #define Window_hpp

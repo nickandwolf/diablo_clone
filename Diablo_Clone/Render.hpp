@@ -4,7 +4,7 @@
 //
 //  Created by Nicholas A Nelson on 4/21/19.
 //  Copyright © 2019 Nick & Wolf. All rights reserved.
-//
+//  REQUIRES RAYLIB
 
 #ifndef Render_hpp
 #define Render_hpp
@@ -13,11 +13,13 @@
 #include <algorithm>
 #include "raylib.h"
 #include "ParentObject.hpp"
+#include "InputHandler.hpp"
 
 static int frameCount;
 
 extern const int TILESIZE;
 extern const int TARGET_FPS;
+extern int PlayerUID;
 
 static int RenderObjectsSize;
 

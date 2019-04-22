@@ -69,3 +69,14 @@ void ParentObject::SetLayer(int newL) {
 int ParentObject::GetLayer() {
     return layer;
 }
+
+void ParentObject::SetUID() {
+    if (UID == -1) {
+        UID = master_UID;
+        master_UID++;
+    }
+}
+
+int ParentObject::GetUID() {
+    return UID;
+}

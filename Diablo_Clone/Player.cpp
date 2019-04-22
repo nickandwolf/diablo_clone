@@ -15,6 +15,7 @@ Player::Player() {
     ParentObject::SetPosition((Vector2){60,60});
     ParentObject::SetCollision((Rectangle) {15, 31, 18, 9});
     ParentObject::SetLayer(2);
+    ParentObject::SetUID();
 }
 Player::Player(float x, float y) {
     ParentObject::SetSprite(LoadTexture("Assets/sheet1.png"));
@@ -22,6 +23,7 @@ Player::Player(float x, float y) {
     ParentObject::SetPosition((Vector2){x,y});
     ParentObject::SetCollision((Rectangle) {15, 31, 18, 9});
     ParentObject::SetLayer(2);
+    ParentObject::SetUID();
 }
 void Player::Update(void) {
     

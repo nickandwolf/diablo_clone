@@ -25,6 +25,8 @@ void RenderDraw() {
     ClearBackground(BLACK);
     
     for(std::vector<ParentObject>::iterator it = RenderObjects.begin(); it != RenderObjects.end(); ++it) {
+        if (it->GetUID() == PlayerUID)
+            HandlePlayerInput(it);
         DrawTextureRec(it->GetSprite(), it->GetSpriteFrame(), it->GetPosition(), WHITE);
     }
     

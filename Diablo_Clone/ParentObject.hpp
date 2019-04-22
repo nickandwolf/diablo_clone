@@ -4,13 +4,14 @@
 //
 //  Created by Nicholas A Nelson on 4/21/19.
 //  Copyright © 2019 Nick & Wolf. All rights reserved.
-//
+//  REQUIRES RAYLIB
 
 #ifndef ParentObject_hpp
 #define ParentObject_hpp
 
 #include "raylib.h"
 
+extern int master_UID;
 /*
  This is a wrapper class
  */
@@ -26,12 +27,18 @@ private:
     //Collision bullshit
     Rectangle collisionRect;
     
+    //Engine Variables
+    int UID = -1;
+    
 public:
     virtual void Update(void);
     
     //we put actual player shit down here...
     
     //getter/setters
+    virtual int GetUID(void);
+    virtual void SetUID(void);
+    
     virtual void SetPosition(Vector2 newPos);
     virtual void SetPosition(float x, float y);
     virtual Vector2 GetPosition(void);
