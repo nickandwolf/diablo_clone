@@ -23,15 +23,14 @@ void InitHeadNode(void) {
     NodeHead->next = NULL; //what data should head contain?
     
     //TODO: fix this if collision bullshit works
-    NodeHead->COLLISION_X = 0;
-    NodeHead->COLLISION_Y = 0;
-    NodeHead->COLLISION_WIDTH = 0;
-    NodeHead->COLLISION_HEIGHT = 0;
+    NodeHead->collisionRect = (Rectangle){0,0,0,0};
     NodeHead->ID = -1;
     NodeHead->UID = -1;
     NodeHead->position.x = -1;
     NodeHead->position.y = -1;
     NodeHead->layer = -1;
+    NodeHead->movementSpeed = -1;
+    NodeHead->MOVEMENT_SPEED = -1;
 }
 
 void AddNode(Node* node) {
@@ -87,12 +86,12 @@ void CreatePlayer() {
     MainPlayer->frameRect = (Rectangle){0,0,48,48};
     MainPlayer->ID = 0;
     MainPlayer->position = (Vector2){60,60};
-    MainPlayer->UID = master_UID;                       //TODO: MAKE THIS MORE DYNAMIC! MAKE COLLISION BOXES DYNAMIC!!!
-    MainPlayer->COLLISION_X = 15;
-    MainPlayer->COLLISION_Y = 31;
-    MainPlayer->COLLISION_WIDTH = 18;
-    MainPlayer->COLLISION_HEIGHT = 9;
+    MainPlayer->UID = master_UID; //TODO: MAKE THIS MORE DYNAMIC! MAKE COLLISION BOXES DYNAMIC!!!
+    
+    MainPlayer->collisionRect = (Rectangle){15,31,18,9};
     MainPlayer->layer = 2;
+    MainPlayer->movementSpeed = 2.0f;
+    MainPlayer->MOVEMENT_SPEED = 2.0f;
     master_UID++;
     
     AddNode(MainPlayer);
@@ -113,10 +112,7 @@ void CreateNode(int ID) {
             temp->ID = ID;
             temp->position = (Vector2){160,160};
             temp->UID = master_UID;
-            temp->COLLISION_X = 15;
-            temp->COLLISION_Y = 31;
-            temp->COLLISION_WIDTH = 18;
-            temp->COLLISION_HEIGHT = 9;
+            temp->collisionRect = (Rectangle){15,31,18,9};
             temp->layer = 2;
             break;
     }
@@ -137,10 +133,7 @@ void CreateMapNode(int ID, int x, int y) {
             temp->frameRect = (Rectangle){48,48,48,48};
             temp->ID = ID;
             temp->position = (Vector2){x,y};
-            temp->COLLISION_X = 0;
-            temp->COLLISION_Y = 0;
-            temp->COLLISION_WIDTH = 0;
-            temp->COLLISION_HEIGHT = 0;
+            temp->collisionRect = (Rectangle){0,0,0,0};
             temp->layer = 0;
             break;
             
@@ -149,10 +142,7 @@ void CreateMapNode(int ID, int x, int y) {
             temp->frameRect = (Rectangle){48,672,48,48};
             temp->ID = ID;
             temp->position = (Vector2){x, y};
-            temp->COLLISION_X = 0;
-            temp->COLLISION_Y = 24;
-            temp->COLLISION_WIDTH = TILESIZE;
-            temp->COLLISION_HEIGHT = 24;
+            temp->collisionRect = (Rectangle){0,24,TILESIZE,24};
             temp->layer = 3;
             break;
             
@@ -160,10 +150,7 @@ void CreateMapNode(int ID, int x, int y) {
             temp->frameRect = (Rectangle){192,672,48,48};
             temp->ID = ID;
             temp->position = (Vector2){x, y};
-            temp->COLLISION_X = 0;
-            temp->COLLISION_Y = 0;
-            temp->COLLISION_WIDTH = TILESIZE;
-            temp->COLLISION_HEIGHT = TILESIZE;
+            temp->collisionRect = (Rectangle){0,0,TILESIZE,TILESIZE};
             temp->layer = 1;
             break;
             
@@ -171,10 +158,7 @@ void CreateMapNode(int ID, int x, int y) {
             temp->frameRect = (Rectangle){48,672,48,48};
             temp->ID = ID;
             temp->position = (Vector2){x, y};
-            temp->COLLISION_X = 0;
-            temp->COLLISION_Y = 24;
-            temp->COLLISION_WIDTH = TILESIZE;
-            temp->COLLISION_HEIGHT = 24;
+            temp->collisionRect = (Rectangle){0,24,TILESIZE,24};
             temp->layer = 1;
             break;
        
@@ -182,10 +166,7 @@ void CreateMapNode(int ID, int x, int y) {
             temp->frameRect = (Rectangle){48,624,48,48};
             temp->ID = ID;
             temp->position = (Vector2){x, y};
-            temp->COLLISION_X = 0;
-            temp->COLLISION_Y = 0;
-            temp->COLLISION_WIDTH = TILESIZE;
-            temp->COLLISION_HEIGHT = TILESIZE;
+            temp->collisionRect = (Rectangle){0,0,TILESIZE,TILESIZE};
             temp->layer = 3;
             break;
             
@@ -193,10 +174,7 @@ void CreateMapNode(int ID, int x, int y) {
             temp->frameRect = (Rectangle){48,672,48,48};
             temp->ID = ID;
             temp->position = (Vector2){x, y};
-            temp->COLLISION_X = 0;
-            temp->COLLISION_Y = 0;
-            temp->COLLISION_WIDTH = TILESIZE;
-            temp->COLLISION_HEIGHT = TILESIZE;
+            temp->collisionRect = (Rectangle){0,0,TILESIZE,TILESIZE};
             temp->layer = 3;
             break;
             
@@ -204,10 +182,7 @@ void CreateMapNode(int ID, int x, int y) {
             temp->frameRect = (Rectangle){0,0,48,48};
             temp->ID = ID;
             temp->position = (Vector2){-1, -1};
-            temp->COLLISION_X = 0;
-            temp->COLLISION_Y = 0;
-            temp->COLLISION_WIDTH = 0;
-            temp->COLLISION_HEIGHT = 0;
+            temp->collisionRect = (Rectangle){0,0,0,0};
             temp->layer = -1;
             break;
     }
@@ -244,43 +219,59 @@ void UpdateNode() {
 
 void HandleInput() {
     if (IsKeyDown(MoveRightKey)) {
-        if (CheckNodeCollision(MainPlayer,1,0)) {
-            MainPlayer->position.x += 1.0f;
-            camera.offset.x -= 1.0f * camera.zoom;
+        if (CheckNodeCollision(MainPlayer,MainPlayer->movementSpeed,0)) {
+            MainPlayer->position.x += MainPlayer->movementSpeed;
+            camera.offset.x -= MainPlayer->movementSpeed * camera.zoom; //TODO: FIX THE CAMERA
         }
     }
     
     else if (IsKeyDown(MoveLeftKey)) {
-        if (CheckNodeCollision(MainPlayer,-1,0)) {
-            MainPlayer->position.x -= 1.0f;
-            camera.offset.x += 1.0f * camera.zoom;
+        if (CheckNodeCollision(MainPlayer,-MainPlayer->movementSpeed,0)) {
+            MainPlayer->position.x -= MainPlayer->movementSpeed;
+            camera.offset.x += MainPlayer->movementSpeed * camera.zoom;
         }
     }
     
     if (IsKeyDown(MoveUpKey)) {
-        if (CheckNodeCollision(MainPlayer,0,-1)) {
-            MainPlayer->position.y -= 1.0f;
-            camera.offset.y += 1.0f * camera.zoom;
+        if (CheckNodeCollision(MainPlayer,0,-MainPlayer->movementSpeed)) {
+            MainPlayer->position.y -= MainPlayer->movementSpeed;
+            camera.offset.y += MainPlayer->movementSpeed * camera.zoom;
         }
     }
     
     else if (IsKeyDown(MoveDownKey)) {
-        if (CheckNodeCollision(MainPlayer,0,1)) {
-            MainPlayer->position.y += 1.0f;
-            camera.offset.y -= 1.0f * camera.zoom;
+        if (CheckNodeCollision(MainPlayer,0,MainPlayer->movementSpeed)) {
+            MainPlayer->position.y += MainPlayer->movementSpeed;
+            camera.offset.y -= MainPlayer->movementSpeed * camera.zoom;
         }
     }
+    
+    if (IsKeyPressed((MoveRunKey))) {
+        MainPlayer->movementSpeed = MainPlayer->MOVEMENT_SPEED*2;
+    }
+    else if (IsKeyUp(MoveRunKey)) {
+        MainPlayer->movementSpeed = MainPlayer->MOVEMENT_SPEED;
+    }
+    
+    if (IsKeyDown(CameraZoomIn)) { //TODO: FIX THIS
+        //if (camera.zoom < 6.0f) camera.zoom += 0.05f;
+        //else camera.zoom = 6.0f;
+    }
+    else if (IsKeyDown(CameraZoomOut)) {
+        //if (camera.zoom > 0.5f) camera.zoom -= 0.05f;
+        //else camera.zoom = 0.5f;
+    }
 }
-
+        
 bool CheckNodeCollision(Node * node, int x, int y) {
     Node* temp1 = NodeHead;
     
     while (temp1 != NULL) {
         if (node->UID != temp1->UID && (!GetNullRect(temp1)))
-            if ((node->position.x + node->COLLISION_X + x < temp1->COLLISION_X + temp1->position.x + temp1->COLLISION_WIDTH) &&
-                (node->position.x + node->COLLISION_X + x + node->COLLISION_WIDTH > temp1->COLLISION_X + temp1->position.x) &&
-                (node->position.y + node->COLLISION_Y + y < temp1->COLLISION_Y + temp1->position.y + temp1->COLLISION_HEIGHT) &&
-                (node->position.y + node->COLLISION_Y + y + node->COLLISION_HEIGHT > temp1->COLLISION_Y + temp1->position.y))
+            if ((node->position.x + node->collisionRect.x + x < temp1->collisionRect.x + temp1->position.x + temp1->collisionRect.width) &&
+                (node->position.x + node->collisionRect.x + x + node->collisionRect.width > temp1->collisionRect.x + temp1->position.x) &&
+                (node->position.y + node->collisionRect.y + y < temp1->collisionRect.y + temp1->position.y + temp1->collisionRect.height) &&
+                (node->position.y + node->collisionRect.y + y + node->collisionRect.height > temp1->collisionRect.y + temp1->position.y))
                 return false;
         
         temp1 = temp1->next;
@@ -405,16 +396,8 @@ void FrontBackSplit(Node* source, Node** frontRef, Node** backRef) {
     slow->next = NULL;
 }
 
-Rectangle GetNodeCollisionRect(Node* node) {
-    return (Rectangle) {node->COLLISION_X + node->position.x, node->COLLISION_Y + node->position.y, node->COLLISION_WIDTH, node->COLLISION_HEIGHT};
-}
-
-Rectangle GetNodeCollisionRectXYWH(float collision_x, float collision_y, float collision_width, float collision_height) {
-    return (Rectangle) {collision_x, collision_y, collision_width, collision_height};
-}
-
 bool GetNullRect(Node * rect) {
-    if (rect->COLLISION_X == 0 && rect->COLLISION_Y == 0 && rect->COLLISION_WIDTH == 0 & rect->COLLISION_HEIGHT == 0)
+    if (rect->collisionRect.x == 0 && rect->collisionRect.y == 0 && rect->collisionRect.width == 0 & rect->collisionRect.height == 0)
         return true;
     return false;
 }

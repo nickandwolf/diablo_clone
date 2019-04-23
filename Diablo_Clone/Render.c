@@ -24,7 +24,7 @@ void InitRender() {
     camera.offset = (Vector2) {SCREEN_WIDTH/2 - MainPlayer->frameRect.width/2 - MainPlayer->position.x, SCREEN_HEIGHT/2 - MainPlayer->frameRect.height/2 - MainPlayer->position.y}; //half-screen, half-sprite, current x/y
     
     camera.rotation = 0.0f;
-    camera.zoom = 1.5f; //TODO: FIGURE OUT ZOOM MATH!
+    camera.zoom = 1.0f; //TODO: FIGURE OUT ZOOM MATH!
 }
 
 void RenderDraw() {

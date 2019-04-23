@@ -34,16 +34,15 @@ enum MAP_ID {
 };
 
 typedef struct Node {
+    float MOVEMENT_SPEED;
+    float movementSpeed;
     int ID; //type of thingy
     int UID; //actually unique thingy
     Vector2 position;
     //Texture2D spriteSheet; // All sprites use the same 4 character sheets
     Rectangle frameRect;     // Also there's a lot of white space between sprites
     struct Node* next;       // so we'll have to clean that up in time
-    float COLLISION_X; //can't assign constants during runtime, so we'll just pretend
-    float COLLISION_Y; //I mean, technically we can but we really shouldn't
-    float COLLISION_WIDTH;
-    float COLLISION_HEIGHT;
+    Rectangle collisionRect;
     int layer;               //0 = floor; 1 = stuff on floor; 2 = higher than that, like players; 3 = highest so FAR
 } Node;
 
@@ -97,11 +96,6 @@ bool CheckNodeCollision(Node * node, int x, int y);
 
 bool CheckNodeSpriteCollision(Rectangle pos, int UID); //TODO: implement
 
-Rectangle GetNodeCollisionRect(Node* node);
-
-Rectangle GetNodeCollisionRectXYWH(float collision_x, float collision_y, float collision_width, float collision_height);
-
 bool GetNullRect(Node * rect);
-
 
 #endif /* Node_h */
