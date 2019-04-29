@@ -11,6 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include "raylib.h"
+#include "HUD.h"
 #include "Node.h"
 #include "Render.h"
 
@@ -30,14 +31,20 @@ int main(int argc, const char * argv[]) {
     MergeSort(&NodeHead); //make a thingy saying if we should change this or not...
     
     InitRender();
+    InitHUD();
     
     while (!WindowShouldClose()) {
+        BeginDrawing();
+        ClearBackground(BLACK);
+        
         RenderDraw();
+        RenderHUD();
         
         UpdateNode();
+        UpdateHUD();
         RenderUpdate();
         
-        
+        EndDrawing();
     }
     
     return 0;

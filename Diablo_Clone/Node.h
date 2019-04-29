@@ -15,6 +15,13 @@
 #include "raylib.h"
 #include "Input.h"
 
+enum TYPE_ID {
+    MAP_TILE = 0,
+    PC,
+    NPC,
+    OBJECT
+};
+
 enum NODE_ID {
     PLAYER //placeholder for classes
 };
@@ -36,7 +43,8 @@ enum MAP_ID {
 typedef struct Node {
     float MOVEMENT_SPEED;
     float movementSpeed;
-    int ID; //type of thingy
+    int TYPE; //type of thingy
+    int ID; //sub-type of thingy
     int UID; //actually unique thingy
     Vector2 position;
     //Texture2D spriteSheet; // All sprites use the same 4 character sheets
@@ -44,6 +52,13 @@ typedef struct Node {
     struct Node* next;       // so we'll have to clean that up in time
     Rectangle collisionRect;
     int layer;               //0 = floor; 1 = stuff on floor; 2 = higher than that, like players; 3 = highest so FAR
+    
+    int curHP; //HAVE 1 HP = CHANCE TO CRIT DODGE!!!
+    int maxHP;
+    
+    int CON;
+    int CON_1;
+    int CON_2;
 } Node;
 
 //MAP SHIT
