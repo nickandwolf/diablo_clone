@@ -11,7 +11,7 @@
 void InitHUD() {
     interface = LoadTexture("Assets/interface.png");
     
-    MainPlayer->curHP = 5;
+    MainPlayer->curHP = 6;
     MainPlayer->maxHP = 10;
     
 }
@@ -23,7 +23,7 @@ void RenderHUD() {
     
     if (MainPlayer->curHP > 0) {
         
-        while (i < MainPlayer->curHP) {
+        while (i < MainPlayer->curHP*3) {
             DrawTextureRec(interface, hpBarFull, (Vector2){8+i,5}, WHITE);
             i++;
         }
@@ -37,7 +37,7 @@ void RenderHUD() {
         DrawTextureRec(interface, hpBarEmptyLeft, (Vector2){7,5}, WHITE);
     }
     
-    while (i < MainPlayer->maxHP) {
+    while (i < MainPlayer->maxHP*3) {
         DrawTextureRec(interface, hpBarEmpty, (Vector2){8+i,5}, WHITE);
         i++;
     }
