@@ -10,6 +10,7 @@
 #define Node_h
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <stdlib.h>
 #include "raylib.h"
@@ -41,8 +42,7 @@ enum MAP_ID {
 };
 
 typedef struct Node {
-    float MOVEMENT_SPEED;
-    float movementSpeed;
+    //Engine
     int TYPE; //type of thingy
     int ID; //sub-type of thingy
     int UID; //actually unique thingy
@@ -52,13 +52,43 @@ typedef struct Node {
     struct Node* next;       // so we'll have to clean that up in time
     Rectangle collisionRect;
     int layer;               //0 = floor; 1 = stuff on floor; 2 = higher than that, like players; 3 = highest so FAR
+    float MOVEMENT_SPEED;
+    float movementSpeed;
     
-    int curHP; //HAVE 1 HP = CHANCE TO CRIT DODGE!!!
-    int maxHP;
+    //Stats
+    int level;
+    int EXP;
+    int curHP;
+    int maxHP; //probably not needed depending on how quick it executes
+    
+    int curMP;
+    int maxMP;
+    
+    int STR;
+    int STR_H; //to hit
+    int STR_D; //damage
+    
+    int DEX;
+    int DEX_H; //to hit w/ ranged
+    int DEX_AC; //AC bonus
     
     int CON;
-    int CON_1;
-    int CON_2;
+    int CON_HP; //Hit point bonus //TODO:Implement sub-stats
+    int CON_CC; //Carrying Capacity
+    
+    int INT;
+    int INT_P; //magic power
+    int INT_MP;//magic points
+    
+    int WIS;
+    int WIS_V; //visibility radius //TODO: figure this shit out
+    int WIS_N; //notice
+    
+    int CHA;
+    int CHA_L; //loot chance
+    int CHA_M; //merchant
+    
+    
 } Node;
 
 //MAP SHIT
@@ -75,42 +105,34 @@ static int master_UID = 1; //MAP TILES ARE 0 RIGHT NOW
 
 //MAKE ACTIONS IN HERE TOO, LIKE MOVE COLLISION SHIT AND MOVE PLAYER SHIT
 
-void print_list(void);
-
+//ENGINE SHIT
 void InitHeadNode(void);
-
-void AddNode(Node* node);
-
-void RemoveNode( Node * node );
-
-void ClearMap(void);
-
-Node* GetNode(int UID);//fix this to not take node
-
-Node* GetNodeXY(int x, int y);
-
 void CreateNode(int ID);
-
-void CreatePlayer(void);
-
-void MakeMap(int mapID);
-
-void CreateMapNode(int ID, int x, int y);
-
+void UpdateNode(void);
+void AddNode(Node* node);
+void RemoveNode( Node * node );
+Node* GetNode(int UID);//fix this to not take node
+Node* GetNodeXY(int x, int y);
+bool CheckNodeCollision(Node * node, int x, int y);
+bool CheckNodeSpriteCollision(Rectangle pos, int UID); //TODO: implement
+bool GetNullRect(Node * rect);
 void MergeSort(Node** headRef);
-
 Node* SortedMerge(Node* a, Node* b);
-
 void FrontBackSplit(Node* source, Node** frontRef, Node** backRef);
 
-void UpdateNode(void);
+//DEBUG
+void print_list(void);
 
+//MAP SHIT
+void MakeMap(int mapID);
+void CreateMapNode(int ID, int x, int y);
+void ClearMap(void);
+
+//PLAYER SHIT
+void CreatePlayer(void);
 void HandleInput(void);
-
-bool CheckNodeCollision(Node * node, int x, int y);
-
-bool CheckNodeSpriteCollision(Rectangle pos, int UID); //TODO: implement
-
-bool GetNullRect(Node * rect);
+void LevelUp(void);
+void CalculateHP(Node * node); //when do we call this shit? May need to make a "check if something changed stats wise" check function check check
+void CalculateCarryCapacity(Node * node);//when would we call this?
 
 #endif /* Node_h */

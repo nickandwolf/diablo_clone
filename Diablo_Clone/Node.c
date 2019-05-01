@@ -8,6 +8,7 @@
 
 #include "Node.h"
 
+//DEBUG
 void print_list() { //THIS IS DEBUG SHIT
     Node * current = NodeHead;
     
@@ -17,6 +18,7 @@ void print_list() { //THIS IS DEBUG SHIT
     }
 }
 
+//ENGINE
 void InitHeadNode(void) {
     NodeHead = NULL;
     NodeHead = malloc(sizeof(Node));
@@ -32,71 +34,6 @@ void InitHeadNode(void) {
     NodeHead->movementSpeed = -1;
     NodeHead->MOVEMENT_SPEED = -1;
 }
-
-void AddNode(Node* node) {
-    Node * current = NodeHead;
-
-    while (current->next != NULL) {
-        current = current->next;
-    }
-
-    current->next = malloc(sizeof(Node));
-    current->next = node;
-    //current->next->next = NULL;
-}
-
-void RemoveNode( Node * node ) { //TODO: Never actually tested this, pretty sure it's borked
-    Node * temp = node->next;
-    
-    node->next = temp->next;
-    free(temp);
-}
-
-void ClearMap() {
-    Node* temp = NodeHead->next;
-    while (temp != NULL) {
-        if (temp->UID == 0) {
-            RemoveNode(temp); //GOTTA TEST THIS!
-        }
-    }
-}
-
-Node* GetNode(int UID) {
-    Node * node = NodeHead->next;
-    while (node != NULL && node->UID != UID) {
-        node = node->next;
-    }
-    
-    return node;
-}
-
-Node* GetNodeXY(int x, int y) { //TODO: Probably broken
-    Node * temp = NodeHead->next;
-    while (temp != NULL && temp->position.x != x && temp->position.y != y) {
-        temp = temp->next;
-    }
-    
-    return temp;
-}
-
-void CreatePlayer() {
-    MainPlayer = malloc(sizeof(Node));
-    MainPlayer->next = NULL;
-    
-    MainPlayer->frameRect = (Rectangle){0,0,48,48};
-    MainPlayer->ID = 0;
-    MainPlayer->position = (Vector2){60,60};
-    MainPlayer->UID = master_UID; //TODO: MAKE THIS MORE DYNAMIC! MAKE COLLISION BOXES DYNAMIC!!!
-    
-    MainPlayer->collisionRect = (Rectangle){15,31,18,9};
-    MainPlayer->layer = 2;
-    MainPlayer->movementSpeed = 2.0f;
-    MainPlayer->MOVEMENT_SPEED = 2.0f;
-    master_UID++;
-    
-    AddNode(MainPlayer);
-}
-
 void CreateNode(int ID) {
     Node * temp = NULL;
     temp = malloc(sizeof(Node));
@@ -122,75 +59,6 @@ void CreateNode(int ID) {
         AddNode(temp);
     }
 }
-
-void CreateMapNode(int ID, int x, int y) {
-    Node * temp = NULL;
-    temp = malloc(sizeof(Node));
-    temp->next = NULL;//probably not needed
-    
-    switch(ID) {
-        case FLOOR:
-            temp->frameRect = (Rectangle){48,48,48,48};
-            temp->ID = ID;
-            temp->position = (Vector2){x,y};
-            temp->collisionRect = (Rectangle){0,0,0,0};
-            temp->layer = 0;
-            break;
-            
-        case BOTTOM_WALL:
-            //temp->frameRect = (Rectangle){48,624,48,48};
-            temp->frameRect = (Rectangle){48,672,48,48};
-            temp->ID = ID;
-            temp->position = (Vector2){x, y};
-            temp->collisionRect = (Rectangle){0,24,TILESIZE,24};
-            temp->layer = 3;
-            break;
-            
-        case TAPESTRY_WALL:
-            temp->frameRect = (Rectangle){192,672,48,48};
-            temp->ID = ID;
-            temp->position = (Vector2){x, y};
-            temp->collisionRect = (Rectangle){0,0,TILESIZE,TILESIZE};
-            temp->layer = 1;
-            break;
-            
-        case TOP_WALL:
-            temp->frameRect = (Rectangle){48,672,48,48};
-            temp->ID = ID;
-            temp->position = (Vector2){x, y};
-            temp->collisionRect = (Rectangle){0,24,TILESIZE,24};
-            temp->layer = 1;
-            break;
-       
-        case FULL_WALL:
-            temp->frameRect = (Rectangle){48,624,48,48};
-            temp->ID = ID;
-            temp->position = (Vector2){x, y};
-            temp->collisionRect = (Rectangle){0,0,TILESIZE,TILESIZE};
-            temp->layer = 3;
-            break;
-            
-        case FILLER_WALL:
-            temp->frameRect = (Rectangle){48,672,48,48};
-            temp->ID = ID;
-            temp->position = (Vector2){x, y};
-            temp->collisionRect = (Rectangle){0,0,TILESIZE,TILESIZE};
-            temp->layer = 3;
-            break;
-            
-        default:
-            temp->frameRect = (Rectangle){0,0,48,48};
-            temp->ID = ID;
-            temp->position = (Vector2){-1, -1};
-            temp->collisionRect = (Rectangle){0,0,0,0};
-            temp->layer = -1;
-            break;
-    }
-    
-    temp->UID = 0;
-    AddNode(temp);
-}
-
 void UpdateNode() {
     MergeSort(&NodeHead);
     
@@ -216,53 +84,39 @@ void UpdateNode() {
         current = current->next;
     }
 }
+void AddNode(Node* node) {
+    Node * current = NodeHead;
 
-void HandleInput() {
-    if (IsKeyDown(MoveRightKey)) {
-        if (CheckNodeCollision(MainPlayer,MainPlayer->movementSpeed,0)) {
-            MainPlayer->position.x += MainPlayer->movementSpeed;
-            camera.offset.x -= MainPlayer->movementSpeed * camera.zoom; //TODO: FIX THE CAMERA
-        }
+    while (current->next != NULL) {
+        current = current->next;
     }
-    
-    else if (IsKeyDown(MoveLeftKey)) {
-        if (CheckNodeCollision(MainPlayer,-MainPlayer->movementSpeed,0)) {
-            MainPlayer->position.x -= MainPlayer->movementSpeed;
-            camera.offset.x += MainPlayer->movementSpeed * camera.zoom;
-        }
-    }
-    
-    if (IsKeyDown(MoveUpKey)) {
-        if (CheckNodeCollision(MainPlayer,0,-MainPlayer->movementSpeed)) {
-            MainPlayer->position.y -= MainPlayer->movementSpeed;
-            camera.offset.y += MainPlayer->movementSpeed * camera.zoom;
-        }
-    }
-    
-    else if (IsKeyDown(MoveDownKey)) {
-        if (CheckNodeCollision(MainPlayer,0,MainPlayer->movementSpeed)) {
-            MainPlayer->position.y += MainPlayer->movementSpeed;
-            camera.offset.y -= MainPlayer->movementSpeed * camera.zoom;
-        }
-    }
-    
-    if (IsKeyPressed((MoveRunKey))) {
-        MainPlayer->movementSpeed = MainPlayer->MOVEMENT_SPEED*2;
-    }
-    else if (IsKeyUp(MoveRunKey)) {
-        MainPlayer->movementSpeed = MainPlayer->MOVEMENT_SPEED;
-    }
-    
-    if (IsKeyDown(CameraZoomIn)) { //TODO: FIX THIS
-        //if (camera.zoom < 6.0f) camera.zoom += 0.05f;
-        //else camera.zoom = 6.0f;
-    }
-    else if (IsKeyDown(CameraZoomOut)) {
-        //if (camera.zoom > 0.5f) camera.zoom -= 0.05f;
-        //else camera.zoom = 0.5f;
-    }
+
+    current->next = malloc(sizeof(Node));
+    current->next = node;
+    //current->next->next = NULL;
 }
-        
+void RemoveNode( Node * node ) { //TODO: Never actually tested this, pretty sure it's borked
+    Node * temp = node->next;
+    
+    node->next = temp->next;
+    free(temp);
+}
+Node* GetNode(int UID) {
+    Node * node = NodeHead->next;
+    while (node != NULL && node->UID != UID) {
+        node = node->next;
+    }
+    
+    return node;
+}
+Node* GetNodeXY(int x, int y) { //TODO: Probably broken
+    Node * temp = NodeHead->next;
+    while (temp != NULL && temp->position.x != x && temp->position.y != y) {
+        temp = temp->next;
+    }
+    
+    return temp;
+}
 bool CheckNodeCollision(Node * node, int x, int y) {
     Node* temp1 = NodeHead;
     
@@ -279,7 +133,75 @@ bool CheckNodeCollision(Node * node, int x, int y) {
     
     return true;
 }
+//check sprite collision
+bool GetNullRect(Node * rect) {
+    if (rect->collisionRect.x == 0 && rect->collisionRect.y == 0 && rect->collisionRect.width == 0 & rect->collisionRect.height == 0)
+        return true;
+    return false;
+}
+void MergeSort(Node** headRef) {
+    Node* head = *headRef;
+    Node* a;
+    Node* b;
+    
+    /* Base case -- length 0 or 1 */
+    if ((head == NULL) || (head->next == NULL)) {
+        return;
+    }
+    
+    /* Split head into 'a' and 'b' sublists */
+    FrontBackSplit(head, &a, &b);
+    
+    /* Recursively sort the sublists */
+    MergeSort(&a);
+    MergeSort(&b);
+    
+    /* answer = merge the two sorted lists together */
+    *headRef = SortedMerge(a, b);
+}
+Node* SortedMerge(Node* a, Node* b) {
+    Node* result = NULL;
+    
+    /* Base cases */
+    if (a == NULL)
+        return (b);
+    else if (b == NULL)
+        return (a);
+    
+    /* Pick either a or b, and recur */
+    if (a->position.y <= b->position.y) {
+        result = a;
+        result->next = SortedMerge(a->next, b);
+    }
+    else {
+        result = b;
+        result->next = SortedMerge(a, b->next);
+    }
+    return (result);
+}
+void FrontBackSplit(Node* source, Node** frontRef, Node** backRef) {
+    Node* fast;
+    Node* slow;
+    slow = source;
+    fast = source->next;
+    
+    /* Advance 'fast' two nodes, and advance 'slow' one node */
+    while (fast != NULL) {
+        fast = fast->next;
+        if (fast != NULL) {
+            slow = slow->next;
+            fast = fast->next;
+        }
+    }
+    
+    /* 'slow' is before the midpoint in the list, so split it in two
+     at that point. */
+    *frontRef = source;
+    *backRef = slow->next;
+    slow->next = NULL;
+}
 
+//MAP
 void MakeMap(int mapID) {
     int* data = 0;
     int length = 0;
@@ -331,73 +253,155 @@ void MakeMap(int mapID) {
     
     free(data); //do we gotta do this?, if we wanna save 1.2MB of memory, yes...
 }
-
-void MergeSort(Node** headRef) {
-    Node* head = *headRef;
-    Node* a;
-    Node* b;
+void CreateMapNode(int ID, int x, int y) {
+    Node * temp = NULL;
+    temp = malloc(sizeof(Node));
+    temp->next = NULL;//probably not needed
     
-    /* Base case -- length 0 or 1 */
-    if ((head == NULL) || (head->next == NULL)) {
-        return;
+    switch(ID) {
+        case FLOOR:
+            temp->frameRect = (Rectangle){48,48,48,48};
+            temp->ID = ID;
+            temp->position = (Vector2){x,y};
+            temp->collisionRect = (Rectangle){0,0,0,0};
+            temp->layer = 0;
+            break;
+            
+        case BOTTOM_WALL:
+            //temp->frameRect = (Rectangle){48,624,48,48};
+            temp->frameRect = (Rectangle){48,672,48,48};
+            temp->ID = ID;
+            temp->position = (Vector2){x, y};
+            temp->collisionRect = (Rectangle){0,24,TILESIZE,24};
+            temp->layer = 3;
+            break;
+            
+        case TAPESTRY_WALL:
+            temp->frameRect = (Rectangle){192,672,48,48};
+            temp->ID = ID;
+            temp->position = (Vector2){x, y};
+            temp->collisionRect = (Rectangle){0,0,TILESIZE,TILESIZE};
+            temp->layer = 1;
+            break;
+            
+        case TOP_WALL:
+            temp->frameRect = (Rectangle){48,672,48,48};
+            temp->ID = ID;
+            temp->position = (Vector2){x, y};
+            temp->collisionRect = (Rectangle){0,24,TILESIZE,24};
+            temp->layer = 1;
+            break;
+            
+        case FULL_WALL:
+            temp->frameRect = (Rectangle){48,624,48,48};
+            temp->ID = ID;
+            temp->position = (Vector2){x, y};
+            temp->collisionRect = (Rectangle){0,0,TILESIZE,TILESIZE};
+            temp->layer = 3;
+            break;
+            
+        case FILLER_WALL:
+            temp->frameRect = (Rectangle){48,672,48,48};
+            temp->ID = ID;
+            temp->position = (Vector2){x, y};
+            temp->collisionRect = (Rectangle){0,0,TILESIZE,TILESIZE};
+            temp->layer = 3;
+            break;
+            
+        default:
+            temp->frameRect = (Rectangle){0,0,48,48};
+            temp->ID = ID;
+            temp->position = (Vector2){-1, -1};
+            temp->collisionRect = (Rectangle){0,0,0,0};
+            temp->layer = -1;
+            break;
     }
     
-    /* Split head into 'a' and 'b' sublists */
-    FrontBackSplit(head, &a, &b);
-    
-    /* Recursively sort the sublists */
-    MergeSort(&a);
-    MergeSort(&b);
-    
-    /* answer = merge the two sorted lists together */
-    *headRef = SortedMerge(a, b);
+    temp->UID = 0;
+    AddNode(temp);
+}
+void ClearMap() {
+    Node* temp = NodeHead->next;
+    while (temp != NULL) {
+        if (temp->UID == 0) {
+            RemoveNode(temp); //GOTTA TEST THIS!
+        }
+    }
 }
 
-Node* SortedMerge(Node* a, Node* b) {
-    Node* result = NULL;
+//PLAYER
+void CreatePlayer() {
+    MainPlayer = malloc(sizeof(Node));
+    MainPlayer->next = NULL;
     
-    /* Base cases */
-    if (a == NULL)
-        return (b);
-    else if (b == NULL)
-        return (a);
+    MainPlayer->frameRect = (Rectangle){0,0,48,48};
+    MainPlayer->ID = 0;
+    MainPlayer->position = (Vector2){60,60};
+    MainPlayer->UID = master_UID; //TODO: MAKE THIS MORE DYNAMIC! MAKE COLLISION BOXES DYNAMIC!!!
+    MainPlayer->collisionRect = (Rectangle){15,31,18,9};
+    MainPlayer->layer = 2;
+    MainPlayer->movementSpeed = 2.0f;
+    MainPlayer->MOVEMENT_SPEED = 2.0f;
+    master_UID++;
     
-    /* Pick either a or b, and recur */
-    if (a->position.y <= b->position.y) {
-        result = a;
-        result->next = SortedMerge(a->next, b);
-    }
-    else {
-        result = b;
-        result->next = SortedMerge(a, b->next);
-    }
-    return (result);
+    MainPlayer->level = 1;
+    MainPlayer->CON = 5;
+    MainPlayer->CON_HP = 0;
+    MainPlayer->CON_CC = 0;
+    
+    AddNode(MainPlayer);
 }
-
-void FrontBackSplit(Node* source, Node** frontRef, Node** backRef) {
-    Node* fast;
-    Node* slow;
-    slow = source;
-    fast = source->next;
+void HandleInput() {
+    CalculateHP(MainPlayer);
     
-    /* Advance 'fast' two nodes, and advance 'slow' one node */
-    while (fast != NULL) {
-        fast = fast->next;
-        if (fast != NULL) {
-            slow = slow->next;
-            fast = fast->next;
+    if (IsKeyDown(MoveRightKey)) {
+        if (CheckNodeCollision(MainPlayer,MainPlayer->movementSpeed,0)) {
+            MainPlayer->position.x += MainPlayer->movementSpeed;
+            camera.offset.x -= MainPlayer->movementSpeed * camera.zoom; //TODO: FIX THE CAMERA
         }
     }
     
-    /* 'slow' is before the midpoint in the list, so split it in two
-     at that point. */
-    *frontRef = source;
-    *backRef = slow->next;
-    slow->next = NULL;
+    else if (IsKeyDown(MoveLeftKey)) {
+        if (CheckNodeCollision(MainPlayer,-MainPlayer->movementSpeed,0)) {
+            MainPlayer->position.x -= MainPlayer->movementSpeed;
+            camera.offset.x += MainPlayer->movementSpeed * camera.zoom;
+        }
+    }
+    
+    if (IsKeyDown(MoveUpKey)) {
+        if (CheckNodeCollision(MainPlayer,0,-MainPlayer->movementSpeed)) {
+            MainPlayer->position.y -= MainPlayer->movementSpeed;
+            camera.offset.y += MainPlayer->movementSpeed * camera.zoom;
+        }
+    }
+    
+    else if (IsKeyDown(MoveDownKey)) {
+        if (CheckNodeCollision(MainPlayer,0,MainPlayer->movementSpeed)) {
+            MainPlayer->position.y += MainPlayer->movementSpeed;
+            camera.offset.y -= MainPlayer->movementSpeed * camera.zoom;
+        }
+    }
+    
+    if (IsKeyPressed((MoveRunKey))) {
+        MainPlayer->movementSpeed = MainPlayer->MOVEMENT_SPEED*2;
+    }
+    else if (IsKeyUp(MoveRunKey)) {
+        MainPlayer->movementSpeed = MainPlayer->MOVEMENT_SPEED;
+    }
+    
+    if (IsKeyDown(CameraZoomIn)) { //TODO: FIX THIS
+        //if (camera.zoom < 6.0f) camera.zoom += 0.05f;
+        //else camera.zoom = 6.0f;
+    }
+    else if (IsKeyDown(CameraZoomOut)) {
+        //if (camera.zoom > 0.5f) camera.zoom -= 0.05f;
+        //else camera.zoom = 0.5f;
+    }
 }
-
-bool GetNullRect(Node * rect) {
-    if (rect->collisionRect.x == 0 && rect->collisionRect.y == 0 && rect->collisionRect.width == 0 & rect->collisionRect.height == 0)
-        return true;
-    return false;
+void CalculateHP(Node * node) {
+    int max = node->maxHP;
+    node->maxHP = ((node->CON * 3) + (node->CON_HP * 2)) * node->level;
+    node->curHP += node->maxHP - max;
+    if (node->curHP > node->maxHP) node->curHP = node->maxHP;
+    if (node->curHP < 1) node->curHP = 1;
 }

@@ -50,10 +50,5 @@ void UpdateHUD() {
     UpdateHealth();
 }
 void UpdateHealth() {
-    fuck++;
     
-    if (fuck > 60) {
-        MainPlayer->curHP--;
-        fuck = 0;
-    }
 }

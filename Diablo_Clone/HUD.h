@@ -25,8 +25,6 @@ static const Rectangle hpBarCur = (Rectangle) {201, 42, 1, 12};
 static const Rectangle hpBarCur2 = (Rectangle) {205, 42, 1, 12};
 static const Rectangle hpBarCur3 = (Rectangle) {183, 42, 1, 12};
 
-static int fuck = 0;
-
 /*
  First space
  Full HP
