@@ -51,6 +51,7 @@ void CreateNode(int ID) {
             temp->UID = master_UID;
             temp->collisionRect = (Rectangle){15,31,18,9};
             temp->layer = 2;
+            temp->visible = false;
             break;
     }
     
@@ -121,19 +122,25 @@ bool CheckNodeCollision(Node * node, int x, int y) {
     Node* temp1 = NodeHead;
     
     while (temp1 != NULL) {
-        if (node->UID != temp1->UID && (!GetNullRect(temp1)))
-            if ((node->position.x + node->collisionRect.x + x < temp1->collisionRect.x + temp1->position.x + temp1->collisionRect.width) &&
-                (node->position.x + node->collisionRect.x + x + node->collisionRect.width > temp1->collisionRect.x + temp1->position.x) &&
-                (node->position.y + node->collisionRect.y + y < temp1->collisionRect.y + temp1->position.y + temp1->collisionRect.height) &&
-                (node->position.y + node->collisionRect.y + y + node->collisionRect.height > temp1->collisionRect.y + temp1->position.y))
-                return false;
+        if (node->UID != temp1->UID) {
+            if (!GetNullRect(temp1))
+                if ((node->position.x + node->collisionRect.x + x < temp1->collisionRect.x + temp1->position.x + temp1->collisionRect.width) &&
+                    (node->position.x + node->collisionRect.x + x + node->collisionRect.width > temp1->collisionRect.x + temp1->position.x) &&
+                    (node->position.y + node->collisionRect.y + y < temp1->collisionRect.y + temp1->position.y + temp1->collisionRect.height) &&
+                    (node->position.y + node->collisionRect.y + y + node->collisionRect.height > temp1->collisionRect.y + temp1->position.y))
+                    return false;
+        }
         
         temp1 = temp1->next;
     }
-    
     return true;
 }
 //check sprite collision
+bool CheckCircleCollision(Vector2 pos, float radius, Rectangle rec) {
+    float deltaX = pos.x - MAX(rec.x, MIN(pos.x, rec.x + rec.width));
+    float deltaY = pos.y - MAX(rec.y, MIN(pos.y, rec.y + rec.height));
+    return (deltaX * deltaX + deltaY * deltaY) < (radius * radius);
+}
 bool GetNullRect(Node * rect) {
     if (rect->collisionRect.x == 0 && rect->collisionRect.y == 0 && rect->collisionRect.width == 0 & rect->collisionRect.height == 0)
         return true;
@@ -265,6 +272,7 @@ void CreateMapNode(int ID, int x, int y) {
             temp->position = (Vector2){x,y};
             temp->collisionRect = (Rectangle){0,0,0,0};
             temp->layer = 0;
+            temp->visible = false;
             break;
             
         case BOTTOM_WALL:
@@ -274,6 +282,7 @@ void CreateMapNode(int ID, int x, int y) {
             temp->position = (Vector2){x, y};
             temp->collisionRect = (Rectangle){0,24,TILESIZE,24};
             temp->layer = 3;
+            temp->visible = false;
             break;
             
         case TAPESTRY_WALL:
@@ -282,6 +291,7 @@ void CreateMapNode(int ID, int x, int y) {
             temp->position = (Vector2){x, y};
             temp->collisionRect = (Rectangle){0,0,TILESIZE,TILESIZE};
             temp->layer = 1;
+            temp->visible = false;
             break;
             
         case TOP_WALL:
@@ -290,6 +300,7 @@ void CreateMapNode(int ID, int x, int y) {
             temp->position = (Vector2){x, y};
             temp->collisionRect = (Rectangle){0,24,TILESIZE,24};
             temp->layer = 1;
+            temp->visible = false;
             break;
             
         case FULL_WALL:
@@ -298,6 +309,7 @@ void CreateMapNode(int ID, int x, int y) {
             temp->position = (Vector2){x, y};
             temp->collisionRect = (Rectangle){0,0,TILESIZE,TILESIZE};
             temp->layer = 3;
+            temp->visible = false;
             break;
             
         case FILLER_WALL:
@@ -306,6 +318,7 @@ void CreateMapNode(int ID, int x, int y) {
             temp->position = (Vector2){x, y};
             temp->collisionRect = (Rectangle){0,0,TILESIZE,TILESIZE};
             temp->layer = 3;
+            temp->visible = false;
             break;
             
         default:
@@ -314,6 +327,7 @@ void CreateMapNode(int ID, int x, int y) {
             temp->position = (Vector2){-1, -1};
             temp->collisionRect = (Rectangle){0,0,0,0};
             temp->layer = -1;
+            temp->visible = false;
             break;
     }
     
@@ -342,6 +356,7 @@ void CreatePlayer() {
     MainPlayer->layer = 2;
     MainPlayer->movementSpeed = 2.0f;
     MainPlayer->MOVEMENT_SPEED = 2.0f;
+    MainPlayer->visible = true;
     master_UID++;
     
     MainPlayer->level = 1;
@@ -398,6 +413,15 @@ void HandleInput() {
         //else camera.zoom = 0.5f;
     }
 }
+
+void MakeVisible(Node * node) {
+    if (node->visible == false) node->visible = true;
+}
+
+void MakeInvisible(Node * node) {
+    if (node->visible == true) node->visible = false;
+}
+
 void CalculateHP(Node * node) {
     int max = node->maxHP;
     node->maxHP = ((node->CON * 3) + (node->CON_HP * 2)) * node->level;

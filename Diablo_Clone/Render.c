@@ -20,11 +20,11 @@ void InitRender() {
     
     //TODO: Have character variable for this shit
     //TODO: Gotta get sprites working... "more" correctly
-    camera.target = (Vector2) {MainPlayer->position.x + 24, MainPlayer->position.y + 24};
+    camera.target = (Vector2) {MainPlayer->position.x + MainPlayer->frameRect.width/2, MainPlayer->position.y + MainPlayer->frameRect.height/2};
     camera.offset = (Vector2) {SCREEN_WIDTH/2 - MainPlayer->frameRect.width/2 - MainPlayer->position.x, SCREEN_HEIGHT/2 - MainPlayer->frameRect.height/2 - MainPlayer->position.y}; //half-screen, half-sprite, current x/y
     
     camera.rotation = 0.0f;
-    camera.zoom = 5.0f; //TODO: FIGURE OUT ZOOM MATH!
+    camera.zoom = 1.0f; //TODO: FIGURE OUT ZOOM MATH!
 }
 
 void RenderDraw() {
@@ -33,14 +33,27 @@ void RenderDraw() {
     for (int layer = 0; layer <= 3; layer++) {
         Node* current = NodeHead->next;
         while (current != NULL) {
-            if (current->layer == layer) {
-                if (current->UID == 0) {
-                    DrawTextureRec(terrainSheet, current->frameRect, current->position, WHITE); //gonna have to fix this :\ no worries yet
-                }
-                else {
-                    DrawTextureRec(masterSheet, current->frameRect, current->position, WHITE);
+            DrawCircleLines(MainPlayer->frameRect.width/2 + MainPlayer->position.x, MainPlayer->frameRect.height/2 + MainPlayer->position.y, 150, RED);
+            
+            //do lighting
+            if (CheckCircleCollision((Vector2){MainPlayer->position.x + MainPlayer->frameRect.width/2, MainPlayer->position.y + MainPlayer->frameRect.height/2}, 150, (Rectangle){current->position.x, current->position.y, current->frameRect.width, current->frameRect.height})) {
+                MakeVisible(current);
+            }
+            else {
+                MakeInvisible(current);
+            }
+            
+            if (current->visible) {
+                if (current->layer == layer) {
+                    if (current->UID == 0) {
+                        DrawTextureRec(terrainSheet, current->frameRect, current->position, WHITE); //gonna have to fix this :\ no worries yet
+                    }
+                    else {
+                        DrawTextureRec(masterSheet, current->frameRect, current->position, WHITE);
+                    }
                 }
             }
+            
             
             //collision debug
             //DrawRectangleLinesEx(GetNodeCollisionRect(current), 1, RED);

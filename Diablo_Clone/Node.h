@@ -16,6 +16,9 @@
 #include "raylib.h"
 #include "Input.h"
 
+#define MIN(a,b) ( ((a) < (b)) ? (a) : (b) )
+#define MAX(a,b) ( ((a) > (b)) ? (a) : (b) )
+
 enum TYPE_ID {
     MAP_TILE = 0,
     PC,
@@ -54,6 +57,8 @@ typedef struct Node {
     int layer;               //0 = floor; 1 = stuff on floor; 2 = higher than that, like players; 3 = highest so FAR
     float MOVEMENT_SPEED;
     float movementSpeed;
+    
+    bool visible; //useless right now
     
     //Stats
     int level;
@@ -115,6 +120,7 @@ Node* GetNode(int UID);//fix this to not take node
 Node* GetNodeXY(int x, int y);
 bool CheckNodeCollision(Node * node, int x, int y);
 bool CheckNodeSpriteCollision(Rectangle pos, int UID); //TODO: implement
+bool CheckCircleCollision(Vector2 pos, float radius, Rectangle rec);
 bool GetNullRect(Node * rect);
 void MergeSort(Node** headRef);
 Node* SortedMerge(Node* a, Node* b);
@@ -131,8 +137,13 @@ void ClearMap(void);
 //PLAYER SHIT
 void CreatePlayer(void);
 void HandleInput(void);
+void MakeVisible(Node * node);
+void MakeInvisible(Node * node);
 void LevelUp(void);
 void CalculateHP(Node * node); //when do we call this shit? May need to make a "check if something changed stats wise" check function check check
 void CalculateCarryCapacity(Node * node);//when would we call this?
 
 #endif /* Node_h */
+
+
+//bool CheckCollisionCircleRec(Vector2 center, float radius, Rectangle rec);
