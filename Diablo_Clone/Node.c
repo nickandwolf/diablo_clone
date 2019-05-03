@@ -331,8 +331,9 @@ void CreateMapNode(int ID, int x, int y) {
             break;
     }
     
+    temp->seen = false; //TODO: make universal shit here;
     temp->UID = 0;
-    AddNode(temp);
+    AddNode(temp); //TODO: also check if it's empty or not
 }
 void ClearMap() {
     Node* temp = NodeHead->next;
@@ -341,6 +342,9 @@ void ClearMap() {
             RemoveNode(temp); //GOTTA TEST THIS!
         }
     }
+}
+void MarkSeen(Node * node) {
+    if (node->seen != true) node->seen = true;
 }
 
 //PLAYER

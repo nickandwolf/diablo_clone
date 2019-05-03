@@ -59,6 +59,7 @@ typedef struct Node {
     float movementSpeed;
     
     bool visible; //useless right now
+    bool seen; //only for map nodes
     
     //Stats
     int level;
@@ -133,6 +134,7 @@ void print_list(void);
 void MakeMap(int mapID);
 void CreateMapNode(int ID, int x, int y);
 void ClearMap(void);
+void MarkSeen(Node * node);
 
 //PLAYER SHIT
 void CreatePlayer(void);

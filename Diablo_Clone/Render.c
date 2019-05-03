@@ -38,6 +38,7 @@ void RenderDraw() {
             //do lighting
             if (CheckCircleCollision((Vector2){MainPlayer->position.x + MainPlayer->frameRect.width/2, MainPlayer->position.y + MainPlayer->frameRect.height/2}, 150, (Rectangle){current->position.x, current->position.y, current->frameRect.width, current->frameRect.height})) {
                 MakeVisible(current);
+                if (current->TYPE == 0) MarkSeen(current);
             }
             else {
                 MakeInvisible(current);
@@ -45,15 +46,15 @@ void RenderDraw() {
             
             if (current->visible) {
                 if (current->layer == layer) {
-                    if (current->UID == 0) {
-                        DrawTextureRec(terrainSheet, current->frameRect, current->position, WHITE); //gonna have to fix this :\ no worries yet
+                    if (current->UID == 0) { //we're gonna have to rewrite this eventually...
+                        DrawTextureRec(terrainSheet, current->frameRect, current->position, WHITE);
                     }
                     else {
                         DrawTextureRec(masterSheet, current->frameRect, current->position, WHITE);
                     }
                 }
             }
-            
+            else if (current->layer == layer && current->UID == 0 && current->seen) DrawTextureRec(terrainSheet, current->frameRect, current->position, GRAY);
             
             //collision debug
             //DrawRectangleLinesEx(GetNodeCollisionRect(current), 1, RED);
