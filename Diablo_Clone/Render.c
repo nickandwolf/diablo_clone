@@ -33,10 +33,10 @@ void RenderDraw() {
     for (int layer = 0; layer <= 3; layer++) {
         Node* current = NodeHead->next;
         while (current != NULL) {
-            DrawCircleLines(MainPlayer->frameRect.width/2 + MainPlayer->position.x, MainPlayer->frameRect.height/2 + MainPlayer->position.y, 150, RED);
+            DrawCircleLines(MainPlayer->frameRect.width/2 + MainPlayer->position.x, MainPlayer->frameRect.height/2 + MainPlayer->position.y, MainPlayer->visibilityRadius, RED);
             
             //do lighting
-            if (CheckCircleCollision((Vector2){MainPlayer->position.x + MainPlayer->frameRect.width/2, MainPlayer->position.y + MainPlayer->frameRect.height/2}, 150, (Rectangle){current->position.x, current->position.y, current->frameRect.width, current->frameRect.height})) {
+            if (CheckCircleCollision((Vector2){MainPlayer->position.x + MainPlayer->frameRect.width/2, MainPlayer->position.y + MainPlayer->frameRect.height/2}, MainPlayer->visibilityRadius, (Rectangle){current->position.x, current->position.y, current->frameRect.width, current->frameRect.height})) {
                 MakeVisible(current);
                 if (current->TYPE == 0) MarkSeen(current);
             }

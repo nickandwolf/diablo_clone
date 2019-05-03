@@ -223,13 +223,13 @@ void MakeMap(int mapID) {
                 3,42,42,42,42,42,42,42,42,42,42,42,3,0,0,0,
                 3,42,42,42,42,42,42,42,42,42,42,42,3,0,0,0,
                 3,42,42,42,42,42,42,42,42,42,42,42,3,0,0,0,
-                3,42,42,42,42,42,42,42,42,42,42,42,3,0,0,0,
+                3,42,42,42,42,42,42,42,282,282,282,282,3,0,0,0,
                 3,42,42,42,42,42,42,42,42,42,42,42,3,0,0,0,
                 3,42,42,42,42,42,42,42,42,42,42,42,3,0,0,0,
                 3,42,42,42,42,42,42,42,42,42,42,42,3,0,0,0,
                 2,282,282,282,282,282,282,282,282,282,282,282,2,0,0,0,
                 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,282,0,0,0,0,0,0,0,0,
                 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
@@ -368,10 +368,17 @@ void CreatePlayer() {
     MainPlayer->CON_HP = 0;
     MainPlayer->CON_CC = 0;
     
+    MainPlayer->WIS = 5;
+    MainPlayer->WIS_V = 5;
+    MainPlayer->WIS_N = 0;
+    
+    MainPlayer->visibilityRadius = 0; //MARK: TEMP!
+    
     AddNode(MainPlayer);
 }
 void HandleInput() {
-    CalculateHP(MainPlayer);
+    CalculateHP(MainPlayer); //TODO: Make it not do this all the fucking time.
+    CalculateVisibilityRadius(MainPlayer);
     
     if (IsKeyDown(MoveRightKey)) {
         if (CheckNodeCollision(MainPlayer,MainPlayer->movementSpeed,0)) {
@@ -432,4 +439,9 @@ void CalculateHP(Node * node) {
     node->curHP += node->maxHP - max;
     if (node->curHP > node->maxHP) node->curHP = node->maxHP;
     if (node->curHP < 1) node->curHP = 1;
+}
+
+void CalculateVisibilityRadius(Node * node) {
+    int newRadius = (node->WIS + (2 * node->WIS_V)) + TILESIZE;
+    node->visibilityRadius = newRadius;
 }

@@ -89,6 +89,7 @@ typedef struct Node {
     int WIS;
     int WIS_V; //visibility radius //TODO: figure this shit out
     int WIS_N; //notice
+    int visibilityRadius; //MARK: PLACEHOLDER!!!
     
     int CHA;
     int CHA_L; //loot chance
@@ -121,7 +122,7 @@ Node* GetNode(int UID);//fix this to not take node
 Node* GetNodeXY(int x, int y);
 bool CheckNodeCollision(Node * node, int x, int y);
 bool CheckNodeSpriteCollision(Rectangle pos, int UID); //TODO: implement
-bool CheckCircleCollision(Vector2 pos, float radius, Rectangle rec);
+bool CheckCircleCollision(Vector2 pos, float radius, Rectangle rec); //TODO: add blocking line of sight
 bool GetNullRect(Node * rect);
 void MergeSort(Node** headRef);
 Node* SortedMerge(Node* a, Node* b);
@@ -144,6 +145,7 @@ void MakeInvisible(Node * node);
 void LevelUp(void);
 void CalculateHP(Node * node); //when do we call this shit? May need to make a "check if something changed stats wise" check function check check
 void CalculateCarryCapacity(Node * node);//when would we call this?
+void CalculateVisibilityRadius(Node * node);
 
 #endif /* Node_h */
 
