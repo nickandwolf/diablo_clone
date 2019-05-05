@@ -24,25 +24,25 @@ void RenderHUD() {
     if (MainPlayer->curHP > 0) {
         
         while (i < MainPlayer->curHP*3) {
-            DrawTextureRec(interface, hpBarFull, (Vector2){8+i,5}, WHITE);
+            DrawTextureRec(interface, hpBarFull, (Vector2){11+i,5}, WHITE);
             i++;
         }
         
-        DrawTextureRec(interface, hpBarCur, (Vector2){8+i,5}, WHITE);
+        DrawTextureRec(interface, hpBarCur, (Vector2){11+i,5}, WHITE);
         
         i++;
     }
     
     else {
-        DrawTextureRec(interface, hpBarEmptyLeft, (Vector2){7,5}, WHITE);
+        DrawTextureRec(interface, hpBarEmptyLeft, (Vector2){10,5}, WHITE);
     }
     
     while (i < MainPlayer->maxHP*3) {
-        DrawTextureRec(interface, hpBarEmpty, (Vector2){8+i,5}, WHITE);
+        DrawTextureRec(interface, hpBarEmpty, (Vector2){11+i,5}, WHITE);
         i++;
     }
     
-    DrawTextureRec(interface, hpBarRight, (Vector2){8+i,5}, WHITE);
+    DrawTextureRec(interface, hpBarRight, (Vector2){11+i,5}, WHITE);
     
 }
 

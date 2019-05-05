@@ -15,15 +15,15 @@ static Texture2D interface;
 
 extern Node * MainPlayer;
 
-static const Rectangle hpBarLeft = (Rectangle) {168, 42, 3, 12};
-static const Rectangle hpBarFull = (Rectangle) {171, 42, 1, 12};
-static const Rectangle hpBarEmpty = (Rectangle) {189, 42, 1, 12};
-static const Rectangle hpBarRight = (Rectangle) {197, 42, 3, 12};
-static const Rectangle hpBarEmptyLeft = (Rectangle) {197, 42, 1, 12};
+static const Rectangle hpBarLeft = (Rectangle) {336, 84, 6, 24};
+static const Rectangle hpBarFull = (Rectangle) {342, 84, 2, 24};
+static const Rectangle hpBarEmpty = (Rectangle) {378, 84, 2, 24};
+static const Rectangle hpBarRight = (Rectangle) {394, 84, 6, 24};
+static const Rectangle hpBarEmptyLeft = (Rectangle) {394, 84, 2, 24};
 
-static const Rectangle hpBarCur = (Rectangle) {201, 42, 1, 12};
-static const Rectangle hpBarCur2 = (Rectangle) {205, 42, 1, 12};
-static const Rectangle hpBarCur3 = (Rectangle) {183, 42, 1, 12};
+static const Rectangle hpBarCur = (Rectangle) {402, 84, 2, 24};
+static const Rectangle hpBarCur2 = (Rectangle) {410, 84, 2, 24};
+static const Rectangle hpBarCur3 = (Rectangle) {366, 84, 2, 24};
 
 /*
  First space
