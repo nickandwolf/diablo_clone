@@ -10,7 +10,8 @@
 
 void InitHUD() {
     interface = LoadTexture("Assets/interface.png");
-    
+    frameCount = 0;
+    cursor = smallAimCursor;
     MainPlayer->curHP = 6;
     MainPlayer->maxHP = 10;
     
@@ -44,11 +45,25 @@ void RenderHUD() {
     
     DrawTextureRec(interface, hpBarRight, (Vector2){11+i,5}, WHITE);
     
+    DrawTextureRec(interface, cursor, (Vector2){GetMouseX()-cursor.width/2, GetMouseY()-cursor.height/2}, WHITE);
 }
 
 void UpdateHUD() {
+    
+    UpdateCursor();
     UpdateHealth();
+    
+    frameCount++;
+    if (frameCount == 60) frameCount = 0;
 }
+void UpdateCursor(void) {
+    if (IsMouseButtonDown(FireWeapon1Key)) {
+        cursor = clickAimCursor;
+    }
+    //else if ();//like hovering over items and shit.
+    else cursor = smallAimCursor;
+}
+
 void UpdateHealth() {
     
 }

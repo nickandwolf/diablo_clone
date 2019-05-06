@@ -24,6 +24,8 @@ const int TILESIZE = 48; //So collisions work, I guess
 
 
 int main(int argc, const char * argv[]) {
+    //ToggleFullscreen();
+    
     InitHeadNode();
     CreatePlayer();
     CreateNode(1);
@@ -33,6 +35,7 @@ int main(int argc, const char * argv[]) {
     InitRender();
     InitHUD();
     
+    HideCursor();
     while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(BLACK);

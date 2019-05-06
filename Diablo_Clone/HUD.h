@@ -9,11 +9,14 @@
 #ifndef HUD_h
 #define HUD_h
 #include "raylib.h"
+#include "Input.h"
 #include "Node.h"
 
 static Texture2D interface;
 
 extern Node * MainPlayer;
+
+static int frameCount;
 
 static const Rectangle hpBarLeft = (Rectangle) {336, 84, 6, 24};
 static const Rectangle hpBarFull = (Rectangle) {342, 84, 2, 24};
@@ -24,6 +27,12 @@ static const Rectangle hpBarEmptyLeft = (Rectangle) {394, 84, 2, 24};
 static const Rectangle hpBarCur = (Rectangle) {402, 84, 2, 24};
 static const Rectangle hpBarCur2 = (Rectangle) {410, 84, 2, 24};
 static const Rectangle hpBarCur3 = (Rectangle) {366, 84, 2, 24};
+
+static const Rectangle bigAimCursor = (Rectangle){1558,616,34,34};
+static const Rectangle clickAimCursor = (Rectangle){1612,620,26,26};
+static const Rectangle smallAimCursor = (Rectangle){1664,624,18,18};
+static Rectangle cursor;
+
 
 /*
  First space
@@ -37,7 +46,9 @@ static const Rectangle hpBarCur3 = (Rectangle) {366, 84, 2, 24};
 void InitHUD(void);
 
 void RenderHUD(void);
-//UPDATERS
+//HUD UPDATERS
+void UpdateCursor(void);
+//STAT UPDATERS
 void UpdateHUD(void);
 void UpdateHealth(void);
 

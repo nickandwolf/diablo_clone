@@ -408,6 +408,10 @@ void HandleInput() {
         }
     }
     
+    if (IsMouseButtonDown(FireWeapon1Key)) {
+        DrawRectangle(GetMouseX()-1, GetMouseY()-1, 2, 2, RED);
+    }
+    
     if (IsKeyPressed((MoveRunKey))) {
         MainPlayer->movementSpeed = MainPlayer->MOVEMENT_SPEED*2;
     }

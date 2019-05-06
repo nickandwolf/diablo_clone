@@ -24,6 +24,8 @@ static int MoveLeftKey = KEY_LEFT;
 static int MoveRightKey = KEY_RIGHT;
 static int MoveRunKey = KEY_LEFT_SHIFT;
 
+static int FireWeapon1Key = MOUSE_LEFT_BUTTON;
+
 //Camera
 static int CameraZoomIn = KEY_EQUAL;
 static int CameraZoomOut = KEY_MINUS;
